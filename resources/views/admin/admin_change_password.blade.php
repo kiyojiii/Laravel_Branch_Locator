@@ -74,43 +74,41 @@
         <div class="col-md-8 col-xl-8 middle-wrapper">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Update Admin Profile</h6>
+                    <h6 class="card-title">Change Password</h6>
 
-                    <form method="POST" action="{{ route('admin.update') }}" class="forms-sample" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('admin.update.password') }}" class="forms-sample" enctype="multipart/form-data">
                         @csrf
-                       <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input name="username" type="text" class="form-control" id="username" autocomplete="off" value="{{ $profileData->username }} ">
+                        <div class="mb-3">
+                            <label for="firstname" class="form-label">Old Password</label>
+                            <input name="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" id="old_password" autocomplete="off">
+                            @error('old_password')
+                            <span class="text-danger">{{ $message }} </span>
+                            @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="firstname" class="form-label">First Name</label>
-                            <input name="firstname" type="text" class="form-control" id="firstname" autocomplete="off" value="{{ $profileData->firstname }} ">
+                            <label for="new_password" class="form-label">New Password</label>
+                            <input name="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" id="new_password" autocomplete="off">
+                            @error('new_password')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <!-- Password requirements -->
+                            <p class="text-muted mt-2">
+                                Password must meet the following requirements:
+                                <ul>
+                                    <li>Minimum of 8 characters</li>
+                                    <li>At least one uppercase letter (A-Z)</li>
+                                    <li>At least one digit (0-9)</li>
+                                    <li>At least one special character (e.g., !@#$%^&*)</li>
+                                </ul>
+                            </p>
                         </div>
                         <div class="mb-3">
-                            <label for="lastname" class="form-label">Last Name</label>
-                            <input name="lastname" type="text" class="form-control" id="lastname" autocomplete="off" value="{{ $profileData->lastname }} ">
+                            <label for="firstname" class="form-label">Confirm New Password</label>
+                            <input name="new_password_confirmation" type="password" class="form-control @error('new_password_confirm') is-invalid @enderror" id="new_password_confirm" autocomplete="off">
                         </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input name="email" type="text" class="form-control" id="email" autocomplete="off" value="{{ $profileData->email }} ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Phone Number</label>
-                            <input name="phone" type="text" class="form-control" id="phone" autocomplete="off" value="{{ $profileData->phone }} ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <input name="address" type="text" class="form-control" id="username" autocomplete="off" value="{{ $profileData->address }} ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="photo" class="form-label">Photo</label>
-                            <input name="photo" class="form-control" type="file" class="form-control" id="image" autocomplete="off" value="{{ $profileData->photo }} ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="photo" class="form-label">Current Photo:</label>
-                            <img id="showImage" class="wd-65 ht-60 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
-                        </div>
-                        <button type="submit" class="btn btn-primary me-2">Update</button>
+                        
+                        <button type="submit" class="btn btn-primary me-2">Update Password</button>
                     </form>
 
                 </div>
@@ -122,18 +120,5 @@
         <!-- Right Wrapper End -->
     </div>
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#image').change(function(e){
-            var reader = new FileReader();
-            reader.onload = function(e){
-                $('#showImage').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(e.target.files['0']);
-        });
-    });
-
-</script>
 
 @endsection

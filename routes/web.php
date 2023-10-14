@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\Backend\JobVacancyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
     Route::get('/admin/profile', [AdminController::class, 'AdminProfile'])->name('admin.profile');
     Route::post('/admin/update', [AdminController::class, 'AdminUpdate'])->name('admin.update');
+    Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
+    Route::post('/admin/update/password', [AdminController::class, 'AdminUpdatePassword'])->name('admin.update.password');
 
 }); // End Group Admin Middleware
 
@@ -50,3 +53,13 @@ Route::middleware(['auth', 'role:agent'])->group(function(){
 }); // End Group Agent Middleware
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+
+//Admin Job Vacancy Route
+Route::middleware(['auth', 'role:admin'])->group(function(){
+
+Route::controller(JobVacancyController::class)->group(function(){
+      /// Admin Group Middleware
+      Route::get('/all/jobs', 'AllJobs')->name('all.jobs');
+});
+
+}); // End Group Admin Middleware
