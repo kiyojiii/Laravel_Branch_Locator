@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="{{ asset('backend/assets/fonts/feather-font/css/iconfont.css') }}">
 	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
 	<!-- endinject -->
-
+	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css') }}">
   <!-- Layout styles -->  
 	<link rel="stylesheet" href="{{ asset('backend/assets/css/demo1/style.css') }}">
   <!-- End layout styles -->
@@ -73,9 +73,14 @@
 	<!-- endinject -->
 
 	<!-- Custom js for this page -->
-  <script src="{{ asset('backend/assets/js/dashboard-dark.js')}}"></script>
+  	<script src="{{ asset('backend/assets/js/dashboard-dark.js')}}"></script>
 	<!-- End custom js for this page -->
 
+	<!-- DataTable JS -->
+	<script src="{{ asset('backend/assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
+  	<script src="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
+	<!-- Toastr -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 	<script>

@@ -60,6 +60,8 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 Route::controller(JobVacancyController::class)->group(function(){
       /// Admin Group Middleware
       Route::get('/all/jobs', 'AllJobs')->name('all.jobs');
+      Route::get('/add/job', 'AddJob')->name('add.job');
+      Route::post('/store/job', 'StoreJob')->name('store.job');
 });
 
 }); // End Group Admin Middleware

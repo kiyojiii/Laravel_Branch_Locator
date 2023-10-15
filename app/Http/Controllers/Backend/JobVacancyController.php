@@ -19,4 +19,39 @@ class JobVacancyController extends Controller
         return view('backend.job.all_jobs',compact('jobs','profileData'));
 
     } // End Method
+
+    public function AddJob(){
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        
+        return view('backend.job.add_job',compact('profileData'));
+    } // End Method
+
+    public function StoreJob(Request $request) {
+        // Validation
+        $request->validate([
+            'slots' => 'required',
+            'position' => 'required',
+            'department' => 'required',
+            'branchloc' => 'required',
+            'status' => 'required',
+        ]);
+    
+        JobVacancy::create([
+            'slots' => $request->slots,
+            'position' => $request->position,
+            'branchloc' => $request->branchloc,
+            'department' => $request->department,
+            'status' => $request->status,
+        ]);
+    
+        $notification = array(
+            'message' => 'Job Listing Added Successfully',
+            'alert-type' => 'success'
+        );
+    
+        return redirect()->route('all.jobs')->with($notification);
+    }
+    
 }
