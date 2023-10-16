@@ -30,6 +30,9 @@
 
     <!-- Template Stylesheet -->
     <link rel="stylesheet" href="{{ asset('backend/assets2/css/style.css') }}">
+
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -85,7 +88,7 @@
                 </div>
             </nav>
 
-            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+            <div class="container-xxl py-5 bg-dark hero-header">
                 <div class="container text-center my-5 pt-5 pb-4">
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Job Vacancies</h1>
                     <nav aria-label="breadcrumb">
@@ -107,45 +110,50 @@
                     <div class="col-lg-6">
                         <div class="row g-3">
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="img/about-1.jpg">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="{{ asset('backend/assets2/img/1.jpg') }}">
                             </div>
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="img/about-2.jpg" style="margin-top: 25%;">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="{{ asset('backend/assets2/img/2.png') }}" style="margin-top: 25%;">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="img/about-3.jpg">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="{{ asset('backend/assets2/img/3.png') }}">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="img/about-4.jpg">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="{{ asset('backend/assets2/img/4.png') }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">About Us</h5>
-                        <h1 class="mb-4">Welcome to <i class="fa fa-utensils text-primary me-2"></i>Restoran</h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos erat ipsum et lorem et sit, sed stet lorem sit.</p>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">About Job Vacancies</h5>
+                        <h1 class="mb-4">Welcome to Job Vacancies</h1>
+                        <p class="mb-4">Our job vacancies portal is your gateway to exciting career opportunities in cooperative organizations. We believe in the power of cooperation and community-driven initiatives, and that's why we offer a diverse range of job openings for individuals who are passionate about making a positive impact on the world.</p>
+                        <p class="mb-4">At Job Vacancies, we connect talented professionals with cooperative businesses, credit unions, and organizations that share a common vision of working together for a better future. Whether you're an experienced cooperative enthusiast or just starting your career, you'll find a wealth of opportunities here to grow, learn, and contribute to the cooperative movement.</p>
                         <div class="row g-4 mb-4">
-                            <div class="col-sm-6">
-                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">15</h1>
-                                    <div class="ps-4">
-                                        <p class="mb-0">Years of</p>
-                                        <h6 class="text-uppercase mb-0">Experience</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">50</h1>
-                                    <div class="ps-4">
-                                        <p class="mb-0">Popular</p>
-                                        <h6 class="text-uppercase mb-0">Master Chefs</h6>
-                                    </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                @php
+                                $openJobsCount = \App\Models\JobVacancy::where('status', 'Open')->count();
+                                @endphp
+                                <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">{{ $openJobsCount }}</h1>
+                                <div class="ps-4">
+                                    <p class="mb-0">Available</p>
+                                    <h6 class="text-uppercase mb-0">Vacant Jobs</h6>
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                @php
+                                $totalcount = \App\Models\JobVacancy::count();
+                                @endphp
+                                <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">{{ $totalcount }}</h1>
+                                <div class="ps-4">
+                                    <p class="mb-0">Total</p>
+                                    <h6 class="text-uppercase mb-0">Job Listing</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -153,79 +161,133 @@
         <!-- About End -->
 
 
-        <!-- Team Start -->
-        <div class="container-xxl pt-5 pb-3">
-            <div class="container">
-                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h5 class="section-title ff-secondary text-center text-primary fw-normal">Team Members</h5>
-                    <h1 class="mb-5">Our Master Chefs</h1>
+        <!-- Two Tables -->
+        <div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Open Job Listing</h6>
+                <p class="text-muted mb-3"> <span style="color: green; font-weight: bold;">Available Jobs</span></p>
+                <div class="table-responsive">
+                <table class="table table-hover" id="openJobListTable">
+                    <thead>
+                        <tr>
+                            <th>Slot(s)</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Branch</th>
+                            <!-- <th>Status</th> -->
+                            <th>Date Posted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($jobs as $key => $data)
+                        @if($data->status === 'Open')
+                        <tr>
+                            <td>{{ $data->slots }}</td>
+                            <td>{{ $data->position }}</td>
+                            <td>{{ $data->department }}</td>
+                            <td>{{ $data->branchloc }}</td>
+                            <!-- <td>{{ $data->status }}</td> -->
+                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+                        </tr>
+                        @endif
+                    @endforeach
+                    </tbody>
+                </table>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item text-center rounded overflow-hidden">
-                            <div class="rounded-circle overflow-hidden m-4">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="">
-                            </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="team-item text-center rounded overflow-hidden">
-                            <div class="rounded-circle overflow-hidden m-4">
-                                <img class="img-fluid" src="img/team-2.jpg" alt="">
-                            </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="team-item text-center rounded overflow-hidden">
-                            <div class="rounded-circle overflow-hidden m-4">
-                                <img class="img-fluid" src="img/team-3.jpg" alt="">
-                            </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="team-item text-center rounded overflow-hidden">
-                            <div class="rounded-circle overflow-hidden m-4">
-                                <img class="img-fluid" src="img/team-4.jpg" alt="">
-                            </div>
-                            <h5 class="mb-0">Full Name</h5>
-                            <small>Designation</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Closed Job Listing</h6>
+                <p class="text-muted mb-3"> <span style="color: red; font-weight: bold;">Closed  Jobs</span></p>
+                <div class="table-responsive">
+                    <table class="table table-hover" id="closedJobListTable">
+                    <thead>
+                            <tr>
+                                <th>Slot(s)</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Branch</th>
+                                <!-- <th>Status</th> -->
+                                <th>Date Posted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($jobs as $key => $data)
+                        @if($data->status === 'Closed')
+                            <tr>
+                            <td>{{ $data->slots }}</td>
+                            <td>{{ $data->position }}</td>
+                            <td>{{ $data->department }}</td>
+                            <td>{{ $data->branchloc }}</td>
+                            <!-- <td>{{ $data->status }}</td> -->
+                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+                            </tr>
+                        @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Two Tables End -->
+        
+    <br><br><br>
+        <!-- All Job Table Start -->
+        <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <nav class="page-breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">All Job Listings</li>
+                            </ol>
+                        </nav> 
+                    </h6>
+                    <div class="table-responsive">
+                        <table id="AllJobListTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th>No.</th>
+                                    <th>Slots</th>
+                                    <th>Position</th>
+                                    <th>Department</th>
+                                    <th>Branch</th>
+                                    <th>Status</th>
+                                    <th>Date Posted</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $rowNumber = 1 @endphp
+                                @foreach($jobs as $key => $data)
+                                <tr>
+                                <td>{{ $rowNumber++ }} </td>
+                                    <td>{{ $data->slots }}</td>
+                                    <td>{{ $data->position }}</td>
+                                    <td>{{ $data->department }}</td>
+                                    <td>{{ $data->branchloc }}</td>                 
+                                    <td style="position: relative;">
+                                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: {{ $data->status === 'Open' ? 'green' : 'red' }}; margin-right: 8px;"></span>
+                                        {{ $data->status }}
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Team End -->
-        
-
-        <!-- Footer Start -->
- 
-        <!-- Footer End -->
+    </div>
+        <!-- All Job Table End -->
 
 
         <!-- Back to Top -->
@@ -246,6 +308,29 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('backend/assets2/js/main.js') }}"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <!-- Initialize DataTables for the tables -->
+<script>
+    $(document).ready(function() {
+        $('#openJobListTable').DataTable
+        ({
+            "lengthMenu": [8, 10, 25, 50], 
+            "pageLength": 8, 
+        });
+        $('#closedJobListTable').DataTable
+        ({
+            "lengthMenu": [8, 10, 25, 50], 
+            "pageLength": 8, 
+        });
+        $('#AllJobListTable').DataTable
+        ({
+            "lengthMenu": [8, 10, 25, 50], 
+            "pageLength": 8, 
+        });
+    });
+</script>
 </body>
 
-</html>

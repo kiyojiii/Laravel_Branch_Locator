@@ -70,19 +70,29 @@
                         <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
                     </div>
                     @if (Route::has('login'))
-                        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                            @auth
-                                <a href="" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"></a>
-                            @else
-                                <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
+            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                @auth
+                    <div class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
 
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="btn btn-secondary py-2 px-4">Register</a>
-                                @endif
-                            @endauth
-                        </div>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="btn btn-secondary py-2 px-4">Register</a>
                     @endif
-                </div>
+                @endauth
+            </div>
+        @endif
             </nav>
 
             <div class="container-xxl py-5 bg-dark hero-header mb-5">

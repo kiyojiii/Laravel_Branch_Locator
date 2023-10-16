@@ -121,8 +121,9 @@ class JobVacancyController extends Controller
     // USER DISPLAY
     public function DisplayAllJobs()
     {
-        $jobVacancies = JobVacancy::all(); // Retrieve job vacancies from the database
-    
-        return view('job-vacancies', compact('jobVacancies'));
+        $jobs = JobVacancy::orderBy('created_at', 'desc')->get(); // Fetch jobs in descending order of 'created_at'
+        
+        return view('job-vacancies', compact('jobs'));
     }
 }
+// return view('backend.job.all_jobs', compact('jobs', 'profileData'));
