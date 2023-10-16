@@ -10,16 +10,14 @@ use App\Models\User;
 
 class JobVacancyController extends Controller
 {
-    public function AllJobs(){
+    public function AllJobs() {
         $id = Auth::user()->id;
         $profileData = User::find($id);
-
-
-        $jobs = JobVacancy::latest()->get();
-        return view('backend.job.all_jobs',compact('jobs','profileData'));
-
-    } // End Method
-
+    
+        $jobs = JobVacancy::orderBy('created_at', 'desc')->get(); // Fetch jobs in descending order of 'created_at'
+        return view('backend.job.all_jobs', compact('jobs', 'profileData'));
+    }
+    
     public function AddJob(){
         $id = Auth::user()->id;
         $profileData = User::find($id);
@@ -35,7 +33,6 @@ class JobVacancyController extends Controller
             'position' => 'required',
             'department' => 'required',
             'branchloc' => 'required',
-            'status' => 'required',
         ]);
     
         JobVacancy::create([
@@ -43,7 +40,7 @@ class JobVacancyController extends Controller
             'position' => $request->position,
             'branchloc' => $request->branchloc,
             'department' => $request->department,
-            'status' => $request->status,
+            'status' => $request->status, // Will be "Open" or "Closed"
         ]);
     
         $notification = array(
@@ -54,4 +51,78 @@ class JobVacancyController extends Controller
         return redirect()->route('all.jobs')->with($notification);
     }
     
+    
+    // public function EditJob($id){
+    //     $id = Auth::user()->id;
+    //     $profileData = User::find($id);
+
+    //     $jobs = JobVacancy::findorFail($id);
+    //     return view('backend.job.edit_job',compact('jobs', 'profileData'));
+        
+    // } // End Method
+
+    public function EditJob($id){
+        $profileData = User::find(Auth::user()->id);
+    
+        $jobs = JobVacancy::findorFail($id);
+    
+        return view('backend.job.edit_job', compact('jobs', 'profileData'));
+    } // End Method
+    
+
+    public function UpdateJob(Request $request){
+
+        $jid = $request->id;
+
+        JobVacancy::findorFail($jid)->update([
+            'slots' => $request->slots,
+            'position' => $request->position,
+            'branchloc' => $request->branchloc,
+            'department' => $request->department,
+            'status' => $request->status,
+        ]);
+        $notification = array(
+            'message' => 'Job Updated Successfully',
+            'alert-type' => 'success'
+        );
+    
+        return redirect()->route('all.jobs')->with($notification);
+    } // End Method
+
+    public function DeleteJob(Request $request){
+
+        $jid = $request->id;
+
+        JobVacancy::findOrFail($jid)->delete();
+
+        $notification = array(
+            'message' => 'Job Deleted Successfully',
+            'alert-type' => 'warning'
+        );
+    
+        return redirect()->back()->with($notification);
+    }// End Method
+    
+    public function updateJobStatus(Request $request, $id)
+{
+    $job = JobVacancy::find($id);
+
+    if (!$job) {
+        return response()->json(['error' => 'Job not found'], 404);
+    }
+
+    // Update the status
+    $job->status = $request->status;
+    $job->save();
+
+    return response()->json(['success' => true]);
+}
+
+    // USER DISPLAY
+    public function DisplayAllJobs()
+    {
+        $jobVacancies = JobVacancy::all(); // Retrieve job vacancies from the database
+    
+        return view('job-vacancies', compact('jobVacancies'));
+    }
 }

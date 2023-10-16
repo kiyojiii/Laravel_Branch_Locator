@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Backend\JobVacancyController;
+use App\Http\Controllers\Backend\DisplayJobVacancyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// Admin Change User Details
 Route::middleware(['auth', 'role:admin'])->group(function(){
 
     /// Admin Group Middleware
@@ -43,18 +45,18 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
     Route::post('/admin/update/password', [AdminController::class, 'AdminUpdatePassword'])->name('admin.update.password');
 
-}); // End Group Admin Middleware
+    }); // End Group Admin Middleware
 
 Route::middleware(['auth', 'role:agent'])->group(function(){
 
     /// Agent Group Middleware
     Route::get('/agent/dashboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
 
-}); // End Group Agent Middleware
+    }); // End Group Agent Middleware
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
 
-//Admin Job Vacancy Route
+//Admin Job Vacancy CRUD
 Route::middleware(['auth', 'role:admin'])->group(function(){
 
 Route::controller(JobVacancyController::class)->group(function(){
@@ -62,6 +64,20 @@ Route::controller(JobVacancyController::class)->group(function(){
       Route::get('/all/jobs', 'AllJobs')->name('all.jobs');
       Route::get('/add/job', 'AddJob')->name('add.job');
       Route::post('/store/job', 'StoreJob')->name('store.job');
-});
+      Route::get('/edit/job/{id}', 'EditJob')->name('edit.job');
+      Route::post('/update/job', 'UpdateJob')->name('update.job');
+      Route::get('/delete/job/{id}', 'DeleteJob')->name('delete.job');
+      Route::post('/update-job-status/{id}', 'updateJobStatus')->name('update.job.status');
+
+    });
 
 }); // End Group Admin Middleware
+
+
+ /// User Job Vacancy
+Route::controller(JobVacancyController::class)->group(function(){
+    Route::get('/job-vacancies', 'DisplayAllJobs')->name('job-vacancies');
+   
+
+  });
+
