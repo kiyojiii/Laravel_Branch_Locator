@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Backend\JobVacancyController;
 use App\Http\Controllers\Backend\DisplayJobVacancyController;
+use App\Http\Controllers\Backend\BranchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,10 +50,10 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 
 Route::middleware(['auth', 'role:agent'])->group(function(){
 
-    /// Agent Group Middleware
-    Route::get('/agent/dashboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
+/// Agent Group Middleware
+Route::get('/agent/dashboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
 
-    }); // End Group Agent Middleware
+}); // End Group Agent Middleware
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
 
@@ -73,11 +74,24 @@ Route::controller(JobVacancyController::class)->group(function(){
 
 }); // End Group Admin Middleware
 
+//Admin Branch Locator CRUD
+Route::middleware(['auth', 'role:admin'])->group(function(){
 
+    Route::controller(BranchController::class)->group(function(){
+          /// Admin Group Middleware
+          Route::get('/all/branches', 'AllBranches')->name('all.branches');
+    
+    });
+    
+}); // End Group Admin Middleware
+
+
+
+
+// ------------------------------------- USER DISPLAY ---------------------------------------->
  /// User Job Vacancy
 Route::controller(JobVacancyController::class)->group(function(){
     Route::get('/job-vacancies', 'DisplayAllJobs')->name('job-vacancies');
-   
-
-  });
+    Route::get('/whitesands', 'UserHome')->name('whitesands');
+}); 
 

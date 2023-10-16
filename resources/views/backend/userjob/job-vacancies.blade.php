@@ -19,6 +19,7 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/334c45a40c.js" crossorigin="anonymous"></script>
 
     <!-- Libraries Stylesheet -->
     <link rel="stylesheet" href="{{ asset('backend/assets2/lib/animate/animate.min.css') }}">
@@ -50,7 +51,7 @@
         <div class="container-xxl position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
                 <a href="" class="navbar-brand p-0">
-                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>WhiteSands</h1>
+                    <h1 class="text-primary m-0"><i class="fa-solid fa-location-dot me-3"></i>WhiteSands</h1>
                     <!-- <img src="img/logo.png" alt="Logo"> -->
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -58,7 +59,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0 pe-4">
-                        <a href="" class="nav-item nav-link">Home</a>
+                        <a href="{{ url('') }}" class="nav-item nav-link">Home</a>
                         <a href="{{ route('job-vacancies') }}" class="nav-item nav-link active">Job Vacancies</a>
                         <a href="service.html" class="nav-item nav-link">Branch Locator</a>
                         <!-- <a href="menu.html" class="nav-item nav-link">Menu</a>
@@ -73,19 +74,29 @@
                         <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
                     </div>
                     @if (Route::has('login'))
-                        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                            @auth
-                                <a href="" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"></a>
-                            @else
-                                <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
+            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                @auth
+                    <div class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
 
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="btn btn-secondary py-2 px-4">Register</a>
-                                @endif
-                            @endauth
-                        </div>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="btn btn-secondary py-2 px-4">Register</a>
                     @endif
-                </div>
+                @endauth
+            </div>
+        @endif
             </nav>
 
             <div class="container-xxl py-5 bg-dark hero-header">
@@ -252,36 +263,40 @@
                         </nav> 
                     </h6>
                     <div class="table-responsive">
-                        <table id="AllJobListTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                <th>No.</th>
-                                    <th>Slots</th>
-                                    <th>Position</th>
-                                    <th>Department</th>
-                                    <th>Branch</th>
-                                    <th>Status</th>
-                                    <th>Date Posted</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php $rowNumber = 1 @endphp
-                                @foreach($jobs as $key => $data)
-                                <tr>
-                                <td>{{ $rowNumber++ }} </td>
-                                    <td>{{ $data->slots }}</td>
-                                    <td>{{ $data->position }}</td>
-                                    <td>{{ $data->department }}</td>
-                                    <td>{{ $data->branchloc }}</td>                 
-                                    <td style="position: relative;">
-                                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: {{ $data->status === 'Open' ? 'green' : 'red' }}; margin-right: 8px;"></span>
-                                        {{ $data->status }}
-                                    </td>
-                                    <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                       <table id="AllJobListTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Slots</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Branch</th>
+            <th>Status</th>
+            <th>Date Posted</th>
+        </tr>
+    </thead>
+    <tbody>
+        @php
+            $jobs = $jobs->sortBy('id'); // Sort jobs by 'id' in descending order
+            $rowNumber = 1;
+        @endphp
+        @foreach($jobs as $key => $data)
+        <tr>
+            <td>{{ $rowNumber++ }}</td>
+            <td>{{ $data->slots }}</td>
+            <td>{{ $data->position }}</td>
+            <td>{{ $data->department }}</td>
+            <td>{{ $data->branchloc }}</td>                 
+            <td style="position: relative;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: {{ $data->status === 'Open' ? 'green' : 'red' }}; margin-right: 8px;"></span>
+                {{ $data->status }}
+            </td>
+            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
                     </div>
                 </div>
             </div>
@@ -327,6 +342,7 @@
         });
         $('#AllJobListTable').DataTable
         ({
+            order: [[0, "desc"]],
             "lengthMenu": [8, 10, 25, 50], 
             "pageLength": 8, 
         });

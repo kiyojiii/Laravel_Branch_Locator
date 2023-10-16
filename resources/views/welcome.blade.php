@@ -19,7 +19,8 @@
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-
+    <script src="https://kit.fontawesome.com/334c45a40c.js" crossorigin="anonymous"></script>
+    
     <!-- Libraries Stylesheet -->
     <link rel="stylesheet" href="{{ asset('backend/assets2/lib/animate/animate.min.css') }}" >
     <link rel="stylesheet" href="{{ asset('backend/assets2/lib/owlcarousel/assets/owl.carousel.min.css') }}"  >
@@ -47,7 +48,7 @@
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
                 <a href="" class="navbar-brand p-0">
-                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>WhiteSands</h1>
+                    <h1 class="text-primary m-0"><i class="fa-solid fa-location-dot me-3"></i>WhiteSands</h1>
                     <!-- <img src="img/logo.png" alt="Logo"> -->
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -55,8 +56,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0 pe-4">
-                        <a href="" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">Job Vacancies</a>
+                        <a href="{{ url('') }}" class="nav-item nav-link active">Home</a>
+                        <a href="{{ route('job-vacancies') }}" class="nav-item nav-link">Job Vacancies</a>
                         <a href="service.html" class="nav-item nav-link">Branch Locator</a>
                         <!-- <a href="menu.html" class="nav-item nav-link">Menu</a>
                         <div class="nav-item dropdown">
@@ -72,7 +73,7 @@
                     @if (Route::has('login'))
                         <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                                <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">You are Logged in</a>
                             @else
                                 <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
 
@@ -91,7 +92,7 @@
                         <div class="col-lg-6 text-center text-lg-start">
                             <h1 class="display-3 text-white animated slideInLeft">Explore Our<br>Branch Locator</h1>
                             <p class="text-white animated slideInLeft mb-4 pb-2">Find branches and exciting job opportunities near you. Discover the perfect location and career to start your journey.</p>
-                            <a href="" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Explore</a>
+                            <a href="{{ route('dashboard') }}" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Explore</a>
                         </div>
                         <div class="col-lg-6 text-center text-lg-end overflow-hidden">
                             <img class="img-fluid" src="{{ asset('backend/assets2/img/hero.png') }}">
