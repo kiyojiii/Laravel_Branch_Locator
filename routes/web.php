@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\JobVacancyController;
 use App\Http\Controllers\Backend\DisplayJobVacancyController;
 use App\Http\Controllers\Backend\BranchController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -94,4 +95,5 @@ Route::controller(JobVacancyController::class)->group(function(){
     Route::get('/job-vacancies', 'DisplayAllJobs')->name('job-vacancies');
     Route::get('/whitesands', 'UserHome')->name('whitesands');
 }); 
+
 

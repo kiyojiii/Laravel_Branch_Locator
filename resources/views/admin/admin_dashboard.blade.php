@@ -34,7 +34,8 @@
   <!-- End layout styles -->
 	<link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}" />
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
-	
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 <body>
 	<div class="main-wrapper">
@@ -83,6 +84,9 @@
 	<script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
 	<!-- Toastr -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+	
 	<script>
 	@if(Session::has('message'))
 	var type = "{{ Session::get('alert-type','info') }}"
@@ -164,6 +168,30 @@ function goBack() {
     });
 </script>
 
+<script>
+ var map = L.map('map').setView([8.2385, 124.2384], 13);
+
+// Add a tile layer for the map
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+var marker;
+
+map.on('click', function(e) {
+    if (marker) {
+        map.removeLayer(marker);
+    }
+
+    marker = L.marker(e.latlng).addTo(map);
+    marker.bindPopup("Coordinates: " + e.latlng).openPopup();
+
+    // Store the latitude and longitude in hidden form fields
+    document.getElementById('lat').value = e.latlng.lat;
+    document.getElementById('lng').value = e.latlng.lng;
+});
+
+</script>
 
 </body>
 </html>    

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\JobVacancy;
 use App\Models\User;
+use App\Models\Branches;
 
 class BranchController extends Controller
 {
@@ -16,4 +17,5 @@ class BranchController extends Controller
     
         return view('backend.branches.all_branches', compact('profileData'));
     }
+    
 }
