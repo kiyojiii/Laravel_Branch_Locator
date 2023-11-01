@@ -28,10 +28,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// USER MIDDLEWARE
 Route::middleware('auth')->group(function () {
+    Route::get('/user/dashboard', [ProfileController::class, 'UserDashboard'])->name('user.user_index');
+    Route::get('/user/profile', [ProfileController::class, 'UserProfile'])->name('user.user_profile');
+    Route::post('/user/update', [ProfileController::class, 'UserUpdate'])->name('user.update');
+    Route::get('/user/change/password', [ProfileController::class, 'UserChangePassword'])->name('user.change.password');
+    Route::post('/user/update/password', [ProfileController::class, 'UserUpdatePassword'])->name('user.update.password');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/logout', [ProfileController::class, 'UserLogout'])->name('logout');
 });
 
 require __DIR__.'/auth.php';
@@ -94,6 +102,7 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 Route::controller(JobVacancyController::class)->group(function(){
     Route::get('/job-vacancies', 'DisplayAllJobs')->name('job-vacancies');
     Route::get('/whitesands', 'UserHome')->name('whitesands');
+    Route::get('/user/all_jobs', 'UserAllJobs')->name('user.all.jobs');
 }); 
 
 

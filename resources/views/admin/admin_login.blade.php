@@ -40,6 +40,9 @@
   <!-- End layout styles -->
 
   <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}" />
+
+  <!-- Include SweetAlert CSS and JS from a CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.12/dist/sweetalert2.min.css">
 </head>
 <body>
 	<div class="main-wrapper">
@@ -58,31 +61,31 @@
                 <div class="col-md-8 ps-md-0">
                   <div class="auth-form-wrapper px-4 py-5">
                     <a href="#" class="noble-ui-logo logo-light d-block mb-2">White<span>Sands</span></a>
-                    <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+                    <h5 class="text-muted fw-normal mb-4">Welcome back Admin! Log in to your account.</h5>
                     <form class="forms-sample" method="post" action="{{ route('login')}}">
                         @csrf
                       <div class="mb-3">
                         <label for="login" class="form-label">Email/Username/Phone</label>
-                        <input type="text" name="login" class="form-control" id="login" placeholder="Email/Username/Phone">
+                        <input type="text" name="login" class="form-control" id="login" placeholder="Email/Username/Phone" required>
                       </div>
                       <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" id="password" autocomplete="current-password" placeholder="Password">
+                        <input type="password" name="password" class="form-control" id="password" autocomplete="current-password" placeholder="Password" required>
                       </div>
-                      <div class="form-check mb-3">
+                      <!-- <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="authCheck">
                         <label class="form-check-label" for="authCheck">
                           Remember me
                         </label>
-                      </div>
+                      </div> -->
                       <div>
                         <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 text-white">Login</a>
-                        <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                        <!-- <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                           <i class="btn-icon-prepend" data-feather="twitter"></i>
                           Login with twitter
-                        </button>
+                        </button> -->
                       </div>
-                      <a href="register.html" class="d-block mt-3 text-muted">Not a user? Sign up</a>
+                      <!-- <a href="register.html" class="d-block mt-3 text-muted">Not a user? Sign up</a> -->
                     </form>
                   </div>
                 </div>
@@ -106,9 +109,32 @@
 	<script src="{{ asset('backend/assets/vendors/feather-icons/feather.min.js') }}"></script>
 	<script src="{{ asset('backend/assets/js/template.js') }}"></script>
 	<!-- endinject -->
-
+        
 	<!-- Custom js for this page -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.12/dist/sweetalert2.min.js"></script>
 	<!-- End custom js for this page -->
+
+  <script>
+    // Check if there are validation errors
+    @if($errors->any())
+        // Create a function to display the error message as a SweetAlert
+        function showValidationErrors() {
+            let errorMessage = '';
+            @foreach ($errors->all() as $error)
+                errorMessage += '<div>{{ $error }}</div>';
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                html: errorMessage,
+            });
+        }
+
+        // Call the function to display the SweetAlert
+        showValidationErrors();
+    @endif
+</script>
 
 </body>
 </html>

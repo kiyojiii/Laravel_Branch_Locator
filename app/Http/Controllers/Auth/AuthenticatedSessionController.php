@@ -9,6 +9,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\User;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -20,24 +23,32 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
+
     /**
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-
+    
         $url = '';
-        if($request->user()->role === 'admin'){
+    
+        if ($request->user()->role === 'admin') {
             $url = 'admin/dashboard';
-        } elseif($request->user()->role === 'agent'){
+        } elseif ($request->user()->role === 'agent') {
             $url = 'agent/dashboard';
-        } elseif($request->user()->role === 'user'){
+        } elseif ($request->user()->role === 'user') {
             $url = '/dashboard';
         }
+    
+        $firstName = $request->user()->firstname; // Get the user's first name
+        $lastName = $request->user()->lastname;   // Get the user's last name
 
+        if (session('success_message')) {
+        Alert::success('Login Successful', 'Welcome Back ' . $firstName . ' ' . $lastName);
+        }
+    
         return redirect()->intended($url);
     }
 
@@ -49,9 +60,7 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
@@ -14,6 +15,11 @@ class AdminController extends Controller
         $id = Auth::user()->id;
         $profileData = User::find($id);
         return view('admin.index',compact('profileData'));
+
+        if (session('success_message')) {
+            Alert::success('Login Successful', 'Welcome Back ' . $firstName . ' ' . $lastName);
+        }
+
     } // End Method
 
     public function AdminLogout(Request $request)

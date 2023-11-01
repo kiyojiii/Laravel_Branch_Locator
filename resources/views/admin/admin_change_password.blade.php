@@ -107,10 +107,15 @@
                             <label for="firstname" class="form-label">Confirm New Password</label>
                             <input name="new_password_confirmation" type="password" class="form-control @error('new_password_confirm') is-invalid @enderror" id="new_password_confirm" autocomplete="off">
                         </div>
-                        
-                        <button type="submit" class="btn btn-primary me-2">Update Password</button>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button type="submit" class="btn btn-primary me-2">Update Password</button>
+                            </div>
+                            <div>
+                                <a href="{{ route('user.user_profile') }}" class="btn btn-danger me-2">Go Back</a>
+                            </div>
+                        </div>
                     </form>
-
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@
                             <span class="h4">{{$profileData->firstname}} {{$profileData->lastname}}</span>
                         </div>
                     </div>
-                    <p>Hi! {{$profileData->firstname}} {{$profileData->lastname}}, the Senior UI Designer at NobleUI. We hope you enjoy the design and quality of Social.</p>
+                    <p>Hi! {{$profileData->firstname}} {{$profileData->lastname}}, You are a {{$profileData->role}}. Please do moderate the website carefully.</p>
                     <div class="mt-3">
                         <label class="tx-11 fw-bolder mb-0 text-uppercase">Username:</label>
                         <p class="text-muted">{{$profileData->username}}</p>
@@ -110,9 +110,14 @@
                             <label for="photo" class="form-label">Current Photo:</label>
                             <img id="showImage" class="wd-65 ht-60 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
                         </div>
-                        <button type="submit" class="btn btn-primary me-2">Update</button>
+                        <div class="d-flex justify-content-between">
+                        <div>
+                            <button type="submit" class="btn btn-primary me-2">Update</button>
+                            <a href="{{ route('user.change.password') }}" class="btn btn-warning me-2">Change Password</a>
+                        </div>
+                        <a href="your-delete-url" class="btn btn-danger me-2">Delete Account</a>
+                    </div>
                     </form>
-
                 </div>
             </div>
         </div>

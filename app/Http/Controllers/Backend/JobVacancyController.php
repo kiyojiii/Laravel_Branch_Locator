@@ -129,5 +129,12 @@ class JobVacancyController extends Controller
     public function UserHome(){
         return view('backend.userjob.whitesands');
     }
+    public function UserAllJobs() {
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+    
+        $jobs = JobVacancy::orderBy('created_at', 'desc')->get(); // Fetch jobs in descending order of 'created_at'
+        return view('backend.userjob.user_all_jobs', compact('jobs', 'profileData'));
+    }
 }
 // return view('backend.job.all_jobs', compact('jobs', 'profileData'));
