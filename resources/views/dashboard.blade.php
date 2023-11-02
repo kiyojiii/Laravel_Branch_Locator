@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets2/css/style.css') }}">
 
     <!-- SweetAlert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.12/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>

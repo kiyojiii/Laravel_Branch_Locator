@@ -45,7 +45,7 @@ class AuthenticatedSessionController extends Controller
         $firstName = $request->user()->firstname; // Get the user's first name
         $lastName = $request->user()->lastname;   // Get the user's last name
 
-        if (session('success_message')) {
+        if (Auth::check()) {
         Alert::success('Login Successful', 'Welcome Back ' . $firstName . ' ' . $lastName);
         }
     

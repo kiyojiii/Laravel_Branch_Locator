@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
+	<meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="NobleUI">
 	<meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
 	<title>Admin Dashboard - Branch Locator</title>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  <!-- End fonts -->
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+	<!-- End fonts -->
 
 	<!-- core:css -->
 	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/core/core.css') }}">
@@ -29,34 +30,44 @@
 	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
 	<!-- endinject -->
 	<link rel="stylesheet" href="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css') }}">
-  <!-- Layout styles -->  
+	<!-- Layout styles -->
 	<link rel="stylesheet" href="{{ asset('backend/assets/css/demo1/style.css') }}">
-  <!-- End layout styles -->
+	<!-- End layout styles -->
 	<link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}" />
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+	<!-- include leaflet -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<!-- Include SweetAlert CSS and JS from a CDN -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.9.0/sweetalert2.all.min.js" integrity="sha512-LTmGiRLYz7G5Sxr4MMXGaOfia3kGZKGAlXzrSCGc4GBGxymu1RGwhFFGwiOQUm+bJOGlV0AmHd1S7zeFlwzkFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<style>
+		#map {
+			height: 470px;
+		}
+	</style>
 </head>
-<body>
-@include('sweetalert::alert')
-	<div class="main-wrapper">
 
+<body>
+	<div class="main-wrapper">
+		@include('sweetalert::alert')
 		<!-- partial:partials/_sidebar.html -->
 		@include('admin.body.sidebar')
 		<!-- partial -->
-	
+
 		<div class="page-wrapper">
-					
+
 			<!-- partial:partials/_navbar.html -->
-            @include('admin.body.header')
+			@include('admin.body.header')
 			<!-- partial -->
 
 			@yield('admin')
 
 			<!-- partial:partials/_footer.html -->
-            @include('admin.body.footer')
+			@include('admin.body.footer')
 			<!-- partial -->
-		
+
 		</div>
 	</div>
 	<!-- core:js -->
@@ -64,8 +75,8 @@
 	<!-- endinject -->
 
 	<!-- Plugin js for this page -->
-  <script src="{{ asset('backend/assets/vendors/flatpickr/flatpickr.min.js')}}"></script>
-  <script src="{{ asset('backend/assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
+	<script src="{{ asset('backend/assets/vendors/flatpickr/flatpickr.min.js')}}"></script>
+	<script src="{{ asset('backend/assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
 	<!-- End plugin js for this page -->
 
 	<!-- inject:js -->
@@ -74,124 +85,134 @@
 	<!-- endinject -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!-- Custom js for this page -->
-  	<script src="{{ asset('backend/assets/js/dashboard-dark.js')}}"></script>
+	<script src="{{ asset('backend/assets/js/dashboard-dark.js')}}"></script>
 	<!-- End custom js for this page -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.12/dist/sweetalert2.min.js"></script>
 	<script src="{{ asset('backend/assets/js/code/code.js')}}"></script>
 	<!-- DataTable JS -->
 	<script src="{{ asset('backend/assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
-  	<script src="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
+	<script src="{{ asset('backend/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
+	<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"> </script>
 	<script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
 	<!-- Toastr -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-	
+
 	<script>
-	@if(Session::has('message'))
-	var type = "{{ Session::get('alert-type','info') }}"
-	switch(type){
-		case 'info':
-		toastr.info(" {{ Session::get('message') }} ");
-		break;
+		@if(Session::has('message'))
+		var type = "{{ Session::get('alert-type','info') }}"
+		switch (type) {
+			case 'info':
+				toastr.info(" {{ Session::get('message') }} ");
+				break;
 
-		case 'success':
-		toastr.success(" {{ Session::get('message') }} ");
-		break;
+			case 'success':
+				toastr.success(" {{ Session::get('message') }} ");
+				break;
 
-		case 'warning':
-		toastr.warning(" {{ Session::get('message') }} ");
-		break;
+			case 'warning':
+				toastr.warning(" {{ Session::get('message') }} ");
+				break;
 
-		case 'error':
-		toastr.error(" {{ Session::get('message') }} ");
-		break; 
-	}
-	@endif 
+			case 'error':
+				toastr.error(" {{ Session::get('message') }} ");
+				break;
+		}
+		@endif
 	</script>
 
-<script>
-function updateStatus(newStatus, jobId) {
-    $.ajax({
-        url: "{{ route('update.job.status', '') }}" + "/" + jobId,
-        type: 'POST',
-        data: {
-            _token: "{{ csrf_token() }}",
-            status: newStatus,
-        },
-        success: function (response) {
-            if (response.success) {
-                // Update the status in the database
-                console.log('Status updated successfully.');
-            } else {
-                console.error('Error updating status.');
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error('Error updating status:', error);
-        }
-    });
-}
-</script>
+	<script>
+		function updateStatus(newStatus, jobId) {
+			$.ajax({
+				url: "{{ route('update.job.status', '') }}" + "/" + jobId,
+				type: 'POST',
+				data: {
+					_token: "{{ csrf_token() }}",
+					status: newStatus,
+				},
+				success: function(response) {
+					if (response.success) {
+						// Update the status in the database
+						console.log('Status updated successfully.');
+					} else {
+						console.error('Error updating status.');
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error('Error updating status:', error);
+				}
+			});
+		}
+	</script>
 
-<script>
-$(document).ready(function () {
-    // Initialize Select2 with custom templates
-    $('.js-example-basic-single').select2({
-        templateResult: function (state) {
-            if (!state.id) {
-                return state.text;
-            }
-            var color = state.text === 'Open' ? 'green' : 'red';
-            return $('<span style="color: ' + color + ';">' + state.text + '</span>');
-        },
-        templateSelection: function (state) {
-            var color = state.text === 'Open' ? 'green' : 'red';
-            return $('<span style="color: ' + color + ';">' + state.text + '</span>');
-        }
-    });
-});
-</script>
+	<script>
+		$(document).ready(function() {
+			// Initialize Select2 with custom templates
+			$('.js-example-basic-single').select2({
+				templateResult: function(state) {
+					if (!state.id) {
+						return state.text;
+					}
+					var color = state.text === 'Open' ? 'green' : 'red';
+					return $('<span style="color: ' + color + ';">' + state.text + '</span>');
+				},
+				templateSelection: function(state) {
+					var color = state.text === 'Open' ? 'green' : 'red';
+					return $('<span style="color: ' + color + ';">' + state.text + '</span>');
+				}
+			});
+		});
+	</script>
 
-<script>
-function goBack() {
-    window.history.back();
-}
-</script>
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
 
-<script>
-    $(document).ready(function() {
-        $('#JobTable').DataTable({
-            "lengthMenu": [5, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
-            "pageLength": 5, // Show 5 rows per page by default
-        });
-    });
-</script>
+	<script>
+		$(document).ready(function() {
+			$('#JobTable').DataTable({
+				"lengthMenu": [5, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
+				"pageLength": 5, // Show 5 rows per page by default
+			});
+		});
+	</script>
 
-<script>
- var map = L.map('map').setView([8.2385, 124.2384], 13);
+	<!-- <script>
+		$(function() {
+			$('#dataCenterPoint').DataTable({
+				processing: true,
+				serverSide: true,
+				responsive: true,
+				lengthChange: true,
+				autoWidth: false,
+				ajax: '{{route('centerpoint.data')}}',
+				columns: [{
+						data: 'DT_RowIndex',
+						orderable: false,
+						searchable: false
+					}, {
+						data: 'coordinates'
+					},
+					{
+						data: 'action'
+					}
+				]
+			})
+		})
+	</script> -->
 
-// Add a tile layer for the map
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-}).addTo(map);
+	<script>
+		$(document).ready(function() {
+			$('#dataCenterPoint').DataTable({
+				"lengthMenu": [5, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
+				"pageLength": 5, // Show 5 rows per page by default
+			});
+		});
+	</script>
 
-var marker;
-
-map.on('click', function(e) {
-    if (marker) {
-        map.removeLayer(marker);
-    }
-
-    marker = L.marker(e.latlng).addTo(map);
-    marker.bindPopup("Coordinates: " + e.latlng).openPopup();
-
-    // Store the latitude and longitude in hidden form fields
-    document.getElementById('lat').value = e.latlng.lat;
-    document.getElementById('lng').value = e.latlng.lng;
-});
-
-</script>
 
 </body>
-</html>    
+</html>

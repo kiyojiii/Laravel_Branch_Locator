@@ -9,25 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('branches', function (Blueprint $table) {
+        Schema::create('spots', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug');
             $table->string('coordinates');
             $table->longText('description');
-            $table->string('image')->nullable();
+            $table->string('image')->nullabe();
             $table->timestamps();
         });
     }
-    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('branches');
+        Schema::dropIfExists('spots');
     }
 };

@@ -17,5 +17,49 @@ class BranchController extends Controller
     
         return view('backend.branches.all_branches', compact('profileData'));
     }
+
+    public function Markers()
+    {
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        return view('backend.branches.markers', compact('profileData'));
+    }
+    
+    public function Circles()
+    {
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        return view('backend.branches.circles', compact('profileData'));
+    }
+    public function Polygon()
+    {
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        return view('backend.branches.polygons', compact('profileData'));
+    }
+
+    public function Layer(){
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        return view('backend.branches.layers', compact('profileData'));
+    }
+
+    public function LayerGroup(){
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        return view('backend.branches.layergroup', compact('profileData'));
+    }
+
+    public function GetCoordinates(){
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        return view('backend.branches.getcoordinate', compact('profileData'));
+    }
     
 }

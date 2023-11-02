@@ -12,7 +12,7 @@
                                 <li class="breadcrumb-item"><a href="{{ route('user.all.jobs') }}">Jobs</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">All Job Listings</li>
                             </ol>
-                        </nav> 
+                        </nav>
                     </h6>
                     <div class="table-responsive">
                         <table id="UserJobTable" class="table">
@@ -32,18 +32,22 @@
                                 @php $rowNumber = 1 @endphp
                                 @foreach($jobs as $key => $data)
                                 <tr>
-                                <td>{{ $rowNumber++ }} </td>
+                                    <td>{{ $rowNumber++ }} </td>
                                     <td>{{ $data->slots }}</td>
                                     <td>{{ $data->position }}</td>
                                     <td>{{ $data->department }}</td>
-                                    <td>{{ $data->branchloc }}</td>                 
+                                    <td>{{ $data->branchloc }}</td>
                                     <td style="position: relative;">
                                         <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: {{ $data->status === 'Open' ? 'green' : 'red' }}; margin-right: 8px;"></span>
                                         {{ $data->status }}
                                     </td>
                                     <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
-                                    <td>
-                                    <a href="#" class="btn btn-primary me-2">Apply</a>
+                                    <td> 
+                                        @if ($data->status === 'Open')
+                                        <a href="#" class="btn btn-primary me-2">Apply</a>
+                                        @else
+                                        <button class="btn btn-secondary me-2" disabled>Full</button>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
