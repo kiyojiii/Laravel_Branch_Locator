@@ -29,9 +29,9 @@
                                 <div class="card">
                                     <div class="card-header">Edit Location Coordinates</div>
                                     <div class="card-body">
-                                        <form action="{{ route('centerpoint.update', $centerpoint->id) }}" method="post">
+                                        <form action="{{ route('update.centerpoint') }}" method="post">
                                             @csrf
-                                            @method('PUT')
+                                            <input type="hidden" name="id" value="{{ $centerpoint->id }}">
                                             <div class="form-group">
                                                 <label for=""> Coordinates </label>
                                                 <input type="text" class="form-control @error('coordinates') is-invalid @enderror" name="coordinates" id="coordinates" value="{{ $centerpoint->coordinates }}">
@@ -48,7 +48,7 @@
                                                 <input type="text" class="form-control" name="longitude" id="longitude" disabled>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-sm my-2"> Edit Location </button>
+                                                <button type="submit" class="btn btn-primary btn-sm my-2 submit"> Edit Location </button>
                                             </div>
                                         </form>
                                     </div>

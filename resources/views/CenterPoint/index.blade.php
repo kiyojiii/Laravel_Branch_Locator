@@ -58,7 +58,7 @@
                                         <td>{{ $data->coordinates }} </td>
                                         <td>
                                             <a href="{{ route('edit.centerpoint', $data->id) }}" class="btn btn-inverse-info btn-sm"> Edit </a>
-                                            <a href="#" class="btn btn-inverse-danger btn-sm" id="#"> Delete </a>
+                                            <a href="{{ route('delete.centerpoint', $data->id) }}" class="btn btn-inverse-danger btn-sm" id="#"> Delete </a>
                                         </td>
                                     </tr>
                                     @endforeach 

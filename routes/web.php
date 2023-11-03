@@ -93,10 +93,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/branches/layergroup', 'LayerGroup')->name('layergroup');
         Route::get('/branches/get-coordinates', 'GetCoordinates')->name('getcoordinates');
         
-        ## Route Datatable
+        ## Route CenterPoint
+        Route::get('/all/centerpoint', [CenterPointController::class, 'AllCenterPoint'])->name('all.centerpoint');
         Route::get('/centerpoint/data', [\App\Http\Controllers\Backend\DataController::class, 'centerpoint'])->name('centerpoint.data');
         Route::resource('centerpoint', (\App\Http\Controllers\Backend\CenterPointController::class));
         Route::get('/edit/centerpoint/{id}', [CenterPointController::class, 'EditCenterPoint'])->name('edit.centerpoint');
+        Route::post('/update/centerpoint', [CenterPointController::class, 'UpdateCenterPoint'])->name('update.centerpoint');
+        Route::get('/delete/job/{id}', [CenterPointController::class, 'DeleteCenterPoint'])->name('delete.centerpoint');
     });
 }); // End Group Admin Middleware
 

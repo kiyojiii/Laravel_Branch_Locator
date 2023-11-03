@@ -22,7 +22,6 @@ class JobVacancyController extends Controller
         $id = Auth::user()->id;
         $profileData = User::find($id);
 
-        
         return view('backend.job.add_job',compact('profileData'));
     } // End Method
 
