@@ -18,4 +18,15 @@ class DataController extends Controller
         ->rawColumns(['action'])
         ->toJson();
     }
+
+    public function spot(){
+        $spot = Spot::latest()->get();
+        return datatables()->of($spot)
+        ->addColumn('action', 'Spot.action')
+        ->addIndexColumn()
+        ->rawColumns(['action'])
+        ->toJson();
+    }
 }
+
+

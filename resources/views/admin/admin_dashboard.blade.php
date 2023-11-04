@@ -213,6 +213,39 @@
 		});
 	</script>
 
+	<script>
+		$(function() {
+			$('#dataSpot').DataTable({
+				processing: true,
+				serverSide: true,
+				responsive: true,
+				lengthChange: true,
+				autoWidth: false,
+				ajax: '{{ route('spot.data') }}',
+				columns: [{
+						data: 'DT_RowIndex',
+						orderable: false,
+						searchable: false
+					}, {
+						data: 'name'
+					}, {
+						data: 'coordinates'
+					},
+					{
+						data: 'action'
+					}
+				]
+			})
+		})
+	</script>
+
+<script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500,0).slideUp(500,function(){
+                $(this).remove()
+            })
+        }, 3000);
+    </script>
 
 </body>
 </html>

@@ -100,6 +100,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/edit/centerpoint/{id}', [CenterPointController::class, 'EditCenterPoint'])->name('edit.centerpoint');
         Route::post('/update/centerpoint', [CenterPointController::class, 'UpdateCenterPoint'])->name('update.centerpoint');
         Route::get('/delete/job/{id}', [CenterPointController::class, 'DeleteCenterPoint'])->name('delete.centerpoint');
+
+        ## Route Spot
+        Route::get('/spot/data', [\App\Http\Controllers\Backend\DataController::class, 'spot'])->name('spot.data');
+        Route::resource('spot', (\App\Http\Controllers\Backend\SpotController::class));
+        Route::put('/spot/{spot}', [\App\Http\Controllers\Backend\SpotController::class, 'update'])->name('spot.update');
+
     });
 }); // End Group Admin Middleware
 
