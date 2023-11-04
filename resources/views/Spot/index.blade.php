@@ -26,14 +26,14 @@
                         <nav class="page-breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('all.jobs') }}">Branches</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">All Branches</li>
+                                <li class="breadcrumb-item active" aria-current="page">Add Branch</li>
                             </ol>
                         </nav>
                     </h6>
                     <div class="card">
                         <div class="card-header">
-                            Add a Spot
-                            <a href="{{ route('spot.create') }}" class="btn btn-info btn-sm float-end"> Create Spot </a>
+                            <strong> List of Branches </strong>
+                            <a href="{{ route('spot.create') }}" class="btn btn-info btn-sm float-end"> Create Branch </a>
                         </div>
                         <div class="card-body">
                             @if(session('success'))
@@ -55,13 +55,12 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
-                            <form action="" method="POST" id="deleteForm">
+                        <form action="" method="POST" id="deleteForm">
                             @csrf
                             @method('DELETE')
-                            <input type="submit" value="Hapus" style="display:none">
+                            <input type="submit" style="display:none">
                         </form>
                         </div>
                     </div>

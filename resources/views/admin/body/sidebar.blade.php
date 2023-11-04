@@ -57,9 +57,12 @@
                   <a href="{{ route('all.branches') }}" class="nav-link">All Branches</a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ route('markers') }}" class="nav-link">Markers</a>
+                  <a href="{{ route('spot.index') }}" class="nav-link">Branch List</a>
                 </li>
                 <li class="nav-item">
+                  <a href="{{ route('spot.create') }}" class="nav-link">Add Branch</a>
+                </li>
+                <!-- <li class="nav-item">
                   <a href="{{ route('circles') }}" class="nav-link">Circles</a>
                 </li>
                 <li class="nav-item">
@@ -73,7 +76,7 @@
                 </li>
                 <li class="nav-item">
                   <a href="{{ route('getcoordinates') }}" class="nav-link">Get Coordinates</a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </li>

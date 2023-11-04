@@ -37,11 +37,12 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 	<!-- include leaflet -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<link href="https://cdn.jsdelivr.net/npm/leaflet-search@4.0.0/dist/leaflet-search.src.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.css" rel="stylesheet">
 	<!-- Include SweetAlert CSS and JS from a CDN -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.9.0/sweetalert2.all.min.js" integrity="sha512-LTmGiRLYz7G5Sxr4MMXGaOfia3kGZKGAlXzrSCGc4GBGxymu1RGwhFFGwiOQUm+bJOGlV0AmHd1S7zeFlwzkFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 	<style>
 		#map {
 			height: 470px;
@@ -217,6 +218,8 @@
 		$(function() {
 			$('#dataSpot').DataTable({
 				processing: true,
+				"lengthMenu": [4, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
+				"pageLength": 4, // Show 5 rows per page by default
 				serverSide: true,
 				responsive: true,
 				lengthChange: true,
@@ -230,8 +233,7 @@
 						data: 'name'
 					}, {
 						data: 'coordinates'
-					},
-					{
+					}, {
 						data: 'action'
 					}
 				]

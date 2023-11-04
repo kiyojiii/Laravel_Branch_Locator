@@ -155,6 +155,6 @@ class SpotController extends Controller
 
         //Storage::disk('local')->delete('public/ImageSpots/' . ($spot->image));
         $spot->delete();
-        return redirect()->back();
+        return view('Spot.index');
     }
 }

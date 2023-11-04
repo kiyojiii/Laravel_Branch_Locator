@@ -18,7 +18,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="card">
-                                    <div class="card-header">Update Spot - {{ $spot->name }} </div>
+                                    <div class="card-header"><strong>Update Branch </strong></div>
                                     <div class="card-body">
                                         <div id="map"></div>
                                     </div>
@@ -27,27 +27,27 @@
 
                             <div class="col-md-6">
                                 <div class="card">
-                                    <div class="card-header">Edit Spot[{{ $spot->name }}] Location Coordinates</div>
+                                    <div class="card-header"><strong>Branch: [{{ $spot->name }}]<strong></div>
                                     <div class="card-body">
                                      <form action="{{ route('spot.update',$spot->id) }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="form-group">
-                                                <label for=""> Coordinates </label>
+                                                <label for=""> <strong> BranchCoordinates<strong> </label>
                                                 <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate" id="coordinate" value="{{ $spot->coordinates }}" >
                                                 @error('coordinate')
                                                     <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for=""> Name </label>
+                                                <label for=""> <strong> BranchName<strong> </label>
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ $spot->name }}" >
                                                 @error('name')
                                                 <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for=""> Upload Image</label>
+                                                <label for=""> <strong> Upload Branch Image<strong></label>
                                                 <img src="{{ $spot->getImageAsset() }}" class="form-control" alt="">
                                                 <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
                                                 @error('image')
@@ -55,14 +55,15 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for=""> Description </label>
-                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror" cols="30" rows="10">{{ $spot->description }}</textarea>
+                                                <label for=""> <strong> Branch Description<strong> </label>
+                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror" cols="30" rows="6">{{ $spot->description }}</textarea>
                                             </div>
                                             @error('description')
                                             <div class="invalid-feedback">{{ $message }} </div>
                                             @enderror
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-sm my-2"> Update </button>
+                                            <div class="d-flex justify-content-between">
+                                                <button type="submit" class="btn btn-primary btn-sm my-2"> Update Branch </button>
+                                                <button type="button" class="btn btn-danger btn-sm my-2" onclick="goBack()">Back</button>
                                             </div>
                                         </form>
                                     </div>

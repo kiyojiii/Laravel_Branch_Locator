@@ -85,7 +85,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(BranchController::class)->group(function () {
         /// Admin Group Middleware
-        Route::get('/all/branches', 'AllBranches')->name('all.branches');
+        Route::get('/all/branches', 'spots')->name('all.branches');
+        Route::get('/spot-detail/{slug}', 'detailSpot')->name('detail-spot');
         Route::get('/branches/markers', 'Markers')->name('markers');
         Route::get('/branches/circles', 'Circles')->name('circles');
         Route::get('/branches/polygons', 'Polygon')->name('polygons');

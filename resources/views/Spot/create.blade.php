@@ -10,7 +10,7 @@
                         <nav class="page-breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('all.jobs') }}">Branches</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Get Coordinates</li>
+                                <li class="breadcrumb-item active" aria-current="page">Get Branch Coordinates</li>
                             </ol>
                         </nav>
                     </h6>
@@ -18,7 +18,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="card">
-                                    <div class="card-header">Spots </div>
+                                    <div class="card-header"><strong>Find Branch in Map</strong></div>
                                     <div class="card-body">
                                         <div id="map"></div>
                                     </div>
@@ -27,40 +27,41 @@
 
                             <div class="col-md-6">
                                 <div class="card">
-                                    <div class="card-header">Get Spot Location</div>
+                                    <div class="card-header"><strong>Branch Details</strong></div>
                                     <div class="card-body">
                                         <form action="{{ route('spot.store') }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group">
-                                                <label for=""> Coordinates </label>
+                                                <label for=""> <strong>Branch Coordinates</strong> </label>
                                                 <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate">
                                                 @error('coordinate')
                                                 <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
-                                            </div>
+                                            </div><br>
                                             <div class="form-group">
-                                                <label for=""> Name </label>
+                                                <label for=""> <strong>Branch Name</strong> </label>
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name">
                                                 @error('name')
                                                 <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
-                                            </div>
+                                            </div><br>
                                             <div class="form-group">
-                                                <label for=""> Upload Image</label>
+                                                <label for=""> <strong>Upload Branch Image</strong></label>
                                                 <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
                                                 @error('image')
                                                 <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
-                                            </div>
+                                            </div><br>
                                             <div class="form-group">
-                                                <label for=""> Description </label>
-                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror" cols="30" rows="10"></textarea>
-                                            </div>
+                                                <label for=""> <strong>Branch Description</strong> </label>
+                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror" cols="30" rows="7"></textarea>
+                                            </div><br>
                                             @error('description')
                                             <div class="invalid-feedback">{{ $message }} </div>
                                             @enderror
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-sm my-2"> Add Location </button>
+                                            <div class="d-flex justify-content-between">
+                                                <button type="submit" class="btn btn-primary btn-sm my-2"> Add Branch </button>
+                                                <button type="button" class="btn btn-danger btn-sm my-2" onclick="goBack()">Back</button>
                                             </div>
                                         </form>
                                     </div>
@@ -106,12 +107,12 @@
             });
 
             var map = L.map('map', {
-                center: [{{$centerPoint->coordinates}}],
+                center: [8.230756413110184,124.24715297978099],
                 zoom: 10,
                 layers: [osm]
             }) 
 
-            var marker = L.marker([{{ $centerPoint->coordinates }}], {
+            var marker = L.marker([8.230756413110184,124.24715297978099], {
                     draggable: true
                 })
                 .addTo(map);
@@ -140,20 +141,24 @@
                 }
 
                 coords.value = lat + "," + lng
-                latitude.value = lat
+                latitude.value = lat,
                 longitude.value = lng
             }
             map.on('click', onMapClick)
 
-            marker.on('dragend', function() {
-                var coordinate = marker.getLatLng();
+            marker.on('dragend', function (e) {
+                var coordinate = e.target.getLatLng();
                 marker.setLatLng(coordinate, {
                     draggable: true
-                })
-                $('#coordinate').val(coordinate.lat + "," + coordinate.lng).keyup()
-                $('#latitude').val(coordinate.lat).keyup()
-                $('#longitude').val(coordinate.lng).keyup()
-            })
+                });
+                var coords = document.querySelector("[name=coordinate]");
+                var latitude = document.querySelector("[name=latitude]");
+                var longitude = document.querySelector("[name=longitude]");
+
+                coords.value = coordinate.lat + "," + coordinate.lng;
+                latitude.value = coordinate.lat;
+                longitude.value = coordinate.lng;
+            });
         </script>
 
         @endsection
