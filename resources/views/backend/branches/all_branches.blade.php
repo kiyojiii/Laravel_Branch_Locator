@@ -9,7 +9,7 @@
                     <h6 class="card-title">
                         <nav class="page-breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('all.jobs') }}">Branches</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('all.branches') }}">Branches</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">All Branches</li>
                             </ol>
                         </nav>

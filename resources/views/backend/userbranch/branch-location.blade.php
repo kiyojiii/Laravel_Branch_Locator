@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>WhiteSands - Job Vacancy</title>
+    <title>WhiteSands - Branch Locator</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -23,8 +23,8 @@
 
     <!-- Libraries Stylesheet -->
     <link rel="stylesheet" href="{{ asset('backend/assets2/lib/animate/animate.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/assets2/lib/owlcarousel/assets/owl.carousel.min.css') }}" >
-    <link rel="stylesheet" href="{{ asset('backend/assets2/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('backend/assets2/lib/owlcarousel/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets2/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" />
 
     <!-- Customized Bootstrap Stylesheet -->
     <link rel="stylesheet" href="{{ asset('backend/assets2/css/bootstrap.min.css') }}">
@@ -34,6 +34,12 @@
 
     <!-- DataTables -->
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@3.0.9/dist/leaflet-search.src.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.min.css">
+
 </head>
 
 <body>
@@ -49,7 +55,7 @@
 
         <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
                 <a href="" class="navbar-brand p-0">
                     <h1 class="text-primary m-0"><i class="fa-solid fa-location-dot me-3"></i>WhiteSands</h1>
                     <!-- <img src="img/logo.png" alt="Logo"> -->
@@ -60,8 +66,8 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0 pe-4">
                         <a href="{{ url('') }}" class="nav-item nav-link">Home</a>
-                        <a href="{{ route('job-vacancies') }}" class="nav-item nav-link active">Job Vacancies</a>
-                        <a href="service.html" class="nav-item nav-link">Branch Locator</a>
+                        <a href="{{ route('job-vacancies') }}" class="nav-item nav-link">Job Vacancies</a>
+                        <a href="{{ route('branch-location') }}" class="nav-item nav-link active">Branch Locator</a>
                         <!-- <a href="menu.html" class="nav-item nav-link">Menu</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -74,38 +80,38 @@
                         <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
                     </div>
                     @if (Route::has('login'))
-            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                @auth
-                    <div class="dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </ul>
-                    </div>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
+                    <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                        @auth
+                        <div class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </ul>
+                        </div>
+                        @else
+                        <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
 
-                    @if (Route::has('register'))
+                        @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="btn btn-secondary py-2 px-4">Register</a>
+                        @endif
+                        @endauth
+                    </div>
                     @endif
-                @endauth
-            </div>
-        @endif
             </nav>
 
             <div class="container-xxl py-5 bg-dark hero-header">
                 <div class="container text-center my-5 pt-5 pb-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Job Vacancies</h1>
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Branch Locations</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center text-uppercase">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item text-white active"><a href="#">Job Vacancies</a></li>
+                            <li class="breadcrumb-item text-white active"><a href="#">Branch Locator</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -121,38 +127,38 @@
                     <div class="col-lg-6">
                         <div class="row g-3">
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="{{ asset('backend/assets2/img/1.jpg') }}">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="{{ asset('backend/assets3/images/dbranch.jpg') }}">
                             </div>
                             <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="{{ asset('backend/assets2/img/2.png') }}" style="margin-top: 25%;">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="{{ asset('backend/assets3/images/cbranch.jpg') }}" style="margin-top: 25%;">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="{{ asset('backend/assets2/img/3.png') }}">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="{{ asset('backend/assets3/images/cmbranch.jpg') }}">
                             </div>
                             <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="{{ asset('backend/assets2/img/4.png') }}">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="{{ asset('backend/assets3/images/gbranch.jpg') }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">About Job Vacancies</h5>
-                        <h1 class="mb-4">Welcome to Job Vacancies</h1>
-                        <p class="mb-4">Our job vacancies portal is your gateway to exciting career opportunities in cooperative organizations. We believe in the power of cooperation and community-driven initiatives, and that's why we offer a diverse range of job openings for individuals who are passionate about making a positive impact on the world.</p>
-                        <p class="mb-4">At Job Vacancies, we connect talented professionals with cooperative businesses, credit unions, and organizations that share a common vision of working together for a better future. Whether you're an experienced cooperative enthusiast or just starting your career, you'll find a wealth of opportunities here to grow, learn, and contribute to the cooperative movement.</p>
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">About Branch Locator</h5>
+                        <h1 class="mb-4">Welcome to Branch Locator</h1>
+                        <p class="mb-4">Welcome to our Branch Locator, your guide to discovering our cooperative organization's network of branches. We're dedicated to serving local communities and providing convenient access to our services.</p>
+                        <p class="mb-4">Explore our branch locations and find the one nearest to you. Whether you're an existing member or interested in joining us, our branches are here to assist you. Join us today in building a stronger and more inclusive community!</p>
                         <div class="row g-4 mb-4">
-                        <div class="col-sm-6">
-                            <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                @php
-                                $openJobsCount = \App\Models\JobVacancy::where('status', 'Open')->count();
-                                @endphp
-                                <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">{{ $openJobsCount }}</h1>
-                                <div class="ps-4">
-                                    <p class="mb-0">Available</p>
-                                    <h6 class="text-uppercase mb-0">Vacant Jobs</h6>
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    @php
+                                    $branches = \App\Models\Spot::count();
+                                    @endphp
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">{{ $branches }}</h1>
+                                    <div class="ps-4">
+                                        <p class="mb-0">Total</p>
+                                        <h6 class="text-uppercase mb-0">NMPC Branches</h6>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
+                            <!-- <div class="col-sm-6">
                             <div class="d-flex align-items-center border-start border-5 border-primary px-3">
                                 @php
                                 $totalcount = \App\Models\JobVacancy::count();
@@ -163,9 +169,8 @@
                                     <h6 class="text-uppercase mb-0">Job Listing</h6>
                                 </div>
                             </div>
+                        </div> -->
                         </div>
-                    </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2 btn-sm" href="">Apply Now</a>
                     </div>
                 </div>
             </div>
@@ -173,137 +178,28 @@
         <!-- About End -->
 
 
-        <!-- Two Tables -->
-        <div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Open Job Listing</h6>
-                <p class="text-muted mb-3"> <span style="color: green; font-weight: bold;">Available Jobs</span></p>
-                <div class="table-responsive">
-                <table class="table table-hover" id="openJobListTable">
-                    <thead>
-                        <tr>
-                            <th>Slot(s)</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Branch</th>
-                            <!-- <th>Status</th> -->
-                            <th>Date Posted</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($jobs as $key => $data)
-                        @if($data->status === 'Open')
-                        <tr>
-                            <td>{{ $data->slots }}</td>
-                            <td>{{ $data->position }}</td>
-                            <td>{{ $data->department }}</td>
-                            <td>{{ $data->branchloc }}</td>
-                            <!-- <td>{{ $data->status }}</td> -->
-                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
-                        </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                </table>
+        <!-- Map -->
+        <div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-4"> <!-- Adjust the width of the left column as needed -->
+            <div class="card">
+                <div class="card-header"><strong>Branch List</strong></div>
+                <div class="card-body">
+                    HERE GOES LIST OF BRANCHES
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title">Closed Job Listing</h6>
-                <p class="text-muted mb-3"> <span style="color: red; font-weight: bold;">Closed  Jobs</span></p>
-                <div class="table-responsive">
-                    <table class="table table-hover" id="closedJobListTable">
-                    <thead>
-                            <tr>
-                                <th>Slot(s)</th>
-                                <th>Position</th>
-                                <th>Department</th>
-                                <th>Branch</th>
-                                <!-- <th>Status</th> -->
-                                <th>Date Posted</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($jobs as $key => $data)
-                        @if($data->status === 'Closed')
-                            <tr>
-                            <td>{{ $data->slots }}</td>
-                            <td>{{ $data->position }}</td>
-                            <td>{{ $data->department }}</td>
-                            <td>{{ $data->branchloc }}</td>
-                            <!-- <td>{{ $data->status }}</td> -->
-                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
-                            </tr>
-                        @endif
-                        @endforeach
-                        </tbody>
-                    </table>
+        <div class="col-md-8"> <!-- Adjust the width of the right column as needed -->
+            <div class="card">
+            <div class="card-header"><strong>Branch Locations</strong></div>
+                <div class="card-body">
+                    <div id="map" style="width: 800px; height: 500px;"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-        <!-- Two Tables End -->
-        
-    <br><br><br>
-        <!-- All Job Table Start -->
-        <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        <nav class="page-breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page">All Job Listings</li>
-                            </ol>
-                        </nav> 
-                    </h6>
-                    <div class="table-responsive">
-                       <table id="AllJobListTable" class="table table-striped">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Slots</th>
-            <th>Position</th>
-            <th>Department</th>
-            <th>Branch</th>
-            <th>Status</th>
-            <th>Date Posted</th>
-        </tr>
-    </thead>
-    <tbody>
-        @php
-            $jobs = $jobs->sortBy('id'); // Sort jobs by 'id' in descending order
-            $rowNumber = 1;
-        @endphp
-        @foreach($jobs as $key => $data)
-        <tr>
-            <td>{{ $rowNumber++ }}</td>
-            <td>{{ $data->slots }}</td>
-            <td>{{ $data->position }}</td>
-            <td>{{ $data->department }}</td>
-            <td>{{ $data->branchloc }}</td>                 
-            <td style="position: relative;">
-                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: {{ $data->status === 'Open' ? 'green' : 'red' }}; margin-right: 8px;"></span>
-                {{ $data->status }}
-            </td>
-            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-        <!-- All Job Table End -->
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -357,7 +253,7 @@
                                 <a href="{{ url('') }}">Home</a>
                                 <a href="{{ route('user.user_profile') }}">Profile</a>
                                 <a href="{{ route('job-vacancies') }}">Job Vacancies</a>
-                                <a href="">Branch Locator</a>
+                                <a href="{{ route('branch-location') }}">Branch Locator</a>
                             </div>
                         </div>
                     </div>
@@ -388,25 +284,117 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <!-- Initialize DataTables for the tables -->
-<script>
-    $(document).ready(function() {
-        $('#openJobListTable').DataTable
-        ({
-            "lengthMenu": [8, 10, 25, 50], 
-            "pageLength": 8, 
+    <script>
+        $(document).ready(function() {
+            $('#openJobListTable').DataTable({
+                "lengthMenu": [8, 10, 25, 50],
+                "pageLength": 8,
+            });
+            $('#closedJobListTable').DataTable({
+                "lengthMenu": [8, 10, 25, 50],
+                "pageLength": 8,
+            });
+            $('#AllJobListTable').DataTable({
+                order: [
+                    [0, "desc"]
+                ],
+                "lengthMenu": [8, 10, 25, 50],
+                "pageLength": 8,
+            });
         });
-        $('#closedJobListTable').DataTable
-        ({
-            "lengthMenu": [8, 10, 25, 50], 
-            "pageLength": 8, 
-        });
-        $('#AllJobListTable').DataTable
-        ({
-            order: [[0, "desc"]],
-            "lengthMenu": [8, 10, 25, 50], 
-            "pageLength": 8, 
-        });
-    });
-</script>
-</body>
+    </script>
 
+    <!-- ALL BRANCHES LEAFLET -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin="">
+    </script>
+
+    <!-- <script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    </script> -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-search@3.0.9/dist/leaflet-search.src.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.min.js"></script>
+
+    <script>
+        var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
+
+        var Stadia_Dark = L.tileLayer(
+            'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+                maxZoom: 20,
+                attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+            });
+
+        var Esri_WorldStreetMap = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+            });
+
+        var map = L.map('map', {
+            center: [{{$centerPoint->coordinates}}],
+            zoom: 10,
+            layers: [osm],
+            fullscreenControl: {
+                pseudoFullscreen: false
+            }
+        })
+
+        const baseLayers = {
+            'Openstreetmap': osm,
+            'StadiaDark': Stadia_Dark,
+            'Esri': Esri_WorldStreetMap
+        }
+
+        var datas = [
+            @foreach($spot as $key => $value) {
+                "loc": [{{$value->coordinates}}],
+                "title": '{!! $value->name !!}'
+            },
+            @endforeach
+        ]
+
+        var markersLayer = new L.layerGroup()
+        map.addLayer(markersLayer)
+
+        var controlSearch = new L.Control.Search({
+            position: 'topleft',
+            layer: markersLayer,
+            zoom: 15,
+            markerLocation: true
+        })
+
+        map.addControl(controlSearch)
+
+        for (i in datas) {
+            var title = datas[i].title,
+                loc = datas[i].loc,
+                marker = new L.Marker(new L.latLng(loc), {
+                    title: title
+                })
+            markersLayer.addLayer(marker)
+
+            @foreach($spot as $item)
+            L.marker([{{$item->coordinates}}])
+                .bindPopup(
+                    "<div class='center my-2'><img src='{{ $item->getImageAsset() }}' class='img-fluid' width='700px'></div>" +
+                    "<div class='center my-2'><strong>Branch Name: </strong><br>{{ $item->name }}</div>" +
+                    "<div class='center'><a href='{{ route('branch-detail',$item->slug) }}' class='btn btn-outline-info'>Branch Details</a></div>"
+                )
+                .addTo(map)
+            @endforeach
+        }
+
+        const layerControl = L.control.layers(baseLayers).addTo(map)
+    </script>
+
+</body>

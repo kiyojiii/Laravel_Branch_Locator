@@ -106,7 +106,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/spot/data', [\App\Http\Controllers\Backend\DataController::class, 'spot'])->name('spot.data');
         Route::resource('spot', (\App\Http\Controllers\Backend\SpotController::class));
         Route::put('/spot/{spot}', [\App\Http\Controllers\Backend\SpotController::class, 'update'])->name('spot.update');
-
+        Route::get('/delete/spot/{id}', [\App\Http\Controllers\Backend\SpotController::class, 'destroy'])->name('spot.destroy');
     });
 }); // End Group Admin Middleware
 
@@ -119,4 +119,10 @@ Route::controller(JobVacancyController::class)->group(function () {
     Route::get('/job-vacancies', 'DisplayAllJobs')->name('job-vacancies');
     Route::get('/whitesands', 'UserHome')->name('whitesands');
     Route::get('/user/all_jobs', 'UserAllJobs')->name('user.all.jobs');
+});
+
+/// User Branch Location
+Route::controller(BranchController::class)->group(function () {
+    Route::get('/branch-location', 'DisplayAllBranches')->name('branch-location');
+    Route::get('/branch-detail/{slug}', 'DisplayBranchDetails')->name('branch-detail');
 });

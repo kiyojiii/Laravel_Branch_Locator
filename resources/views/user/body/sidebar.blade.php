@@ -50,7 +50,7 @@
             <div class="collapse" id="uiComponents">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="{{ route('all.branches') }}" class="nav-link">All Branches</a>
+                  <a href="{{ route('branch-location') }}" class="nav-link">All Branches</a>
                 </li>
               </ul>
             </div>

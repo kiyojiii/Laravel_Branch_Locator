@@ -146,7 +146,7 @@ class SpotController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+  public function destroy($id)
     {
         $spot = Spot::findOrFail($id);
         if (File::exists('upload/spots/' . $spot->image)) {
@@ -155,6 +155,6 @@ class SpotController extends Controller
 
         //Storage::disk('local')->delete('public/ImageSpots/' . ($spot->image));
         $spot->delete();
-        return view('Spot.index');
+        return redirect()->back();
     }
 }

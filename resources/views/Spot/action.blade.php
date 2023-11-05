@@ -1,5 +1,5 @@
 <a href="{{ route('spot.edit', $model) }}" class="btn btn-warning btn-sm">Edit</a>
-<button href="{{ route('spot.destroy', $model) }}" class="btn btn-danger btn-sm" id="delete">Delete</button>
+<a href="{{ route('spot.destroy', $model) }}" class="btn btn-danger btn-sm" id="delete">Delete</a>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -17,10 +17,8 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-
-                document.getElementById('deleteForm').action = href
-                document.getElementById('deleteForm').submit()
-                
+                document.getElementById('deleteData').action = href
+                document.getElementById('deleteData').submit()
                 Swal.fire(
                     'Deleted!',
                     'Your file has been deleted.',

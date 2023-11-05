@@ -57,11 +57,11 @@
                                 </thead>
                                 <tbody></tbody>
                             </table>
-                        <form action="" method="POST" id="deleteForm">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" style="display:none">
-                        </form>
+                            <form action="" method="post" id="deleteData">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" style="display:none">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,5 @@
     </div>
 
 </div>
-
-
 
 @endsection

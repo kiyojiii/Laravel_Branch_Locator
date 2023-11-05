@@ -177,12 +177,12 @@
                         <p class="mb-4">Welcome to WhiteSands, your gateway to explore multi-cooperative branches and exciting job vacancies. We're here to connect you with opportunities and help you find your next career move or business expansion.</p>
                         <p class="mb-4">With our user-friendly platform, you can easily locate branches of various cooperatives and discover job openings from a variety of industries. Whether you're a job seeker or an organization looking for top talent, WhiteSands has you covered.</p>
                         @php
-                        $totalcount = \App\Models\JobVacancy::count();
+                            $branches = \App\Models\Spot::count();
                         @endphp
                         <div class="row g-4 mb-4">
                             <div class="col-sm-6">
                                 <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">#</h1>
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">{{ $branches }}</h1>
                                     <div class="ps-4">
                                         <p class="mb-0">No. of</p>
                                         <h6 class="text-uppercase mb-0">Branches</h6>
@@ -402,7 +402,7 @@
                             <div class="footer-menu">
                                 <a href="{{ url('') }}">Home</a>
                                 <a href="{{ route('job-vacancies') }}">Job Vacancies</a>
-                                <a href="">Branch Locator</a>
+                                <a href="{{ route('branch-location') }}">Branch Locator</a>
                             </div>
                         </div>
                     </div>

@@ -128,6 +128,7 @@ class JobVacancyController extends Controller
     public function UserHome(){
         return view('backend.userjob.whitesands');
     }
+    
     public function UserAllJobs() {
         $id = Auth::user()->id;
         $profileData = User::find($id);
