@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\Rule;
 class RegisteredUserController extends Controller
 {
     /**
@@ -31,7 +32,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -40,12 +41,15 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        Alert::success('Registered Successfully', 'Welcome New User'.$user->username);
+        $notification = array(
+            'message' => 'User Registered Successfully',
+            'alert-type' => 'success'
+        );
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME)->with($notification);
     }
 }

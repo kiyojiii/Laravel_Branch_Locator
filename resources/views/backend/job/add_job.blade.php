@@ -78,15 +78,19 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Branch Location</label>
-                                    <input name="branchloc" type="text" class="form-control">
-                                    @error('branchloc')
-                                    <span class="text-danger">{{ $message }} </span>
-                                    @enderror
-                                </div>
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label class="form-label">Branch Location</label>
+                                <select name="branchloc" class="form-control" size="5" style="max-height: 120px; overflow-y: auto;">
+                                    @foreach ($branch as $branchItem)
+                                        <option value="{{ $branchItem->name }}">{{ $branchItem->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('branchloc')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
+                        </div>
                         </div>
                         <button type="submit" class="btn btn-primary submit">Add Job</button>
                         <button type="button" class="btn btn-secondary" onclick="goBack()">Back</button>

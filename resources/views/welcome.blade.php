@@ -58,7 +58,7 @@
                     <div class="navbar-nav ms-auto py-0 pe-4">
                         <a href="{{ url('') }}" class="nav-item nav-link active">Home</a>
                         <a href="{{ route('job-vacancies') }}" class="nav-item nav-link">Job Vacancies</a>
-                        <a href="service.html" class="nav-item nav-link">Branch Locator</a>
+                        <a href="{{ route('branch-location') }}" class="nav-item nav-link">Branch Locator</a>
                         <!-- <a href="menu.html" class="nav-item nav-link">Menu</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -75,7 +75,7 @@
                         @auth
                         <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">You are Logged in</a>
                         @else
-                        <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
+                        <a href="{{ route('user.login') }}" class="btn btn-primary py-2 px-4">Log in</a>
 
                         @if (Route::has('register'))
                         <a href="{{ route('login') }}" class="btn btn-secondary py-2 px-4">Register</a>

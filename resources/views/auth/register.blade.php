@@ -1,7 +1,14 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
-
+    <!-- Add this section to display validation errors -->
+    @if($errors->any())
+        <script>
+                $(document).ready(function () {
+                    toastr.error('{{ implode(" & ", $errors->all()) }}', 'Validation Error');
+                });
+        </script>
+    @endif
         <!-- Name -->
         <div>
             <x-input-label for="firstname" :value="__('First Name')" />

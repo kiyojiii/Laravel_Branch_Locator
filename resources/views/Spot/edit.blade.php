@@ -33,16 +33,23 @@
                                             @csrf
                                             @method('PUT')
                                             <div class="form-group">
-                                                <label for=""> <strong> BranchCoordinates<strong> </label>
-                                                <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate" id="coordinate" value="{{ $spot->coordinates }}" >
+                                                <label for=""> <strong> Branch Name<strong> </label>
+                                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ $spot->name }}" >
+                                                @error('name')
+                                                <div class="invalid-feedback">{{ $message }} </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for=""> <strong> Branch Coordinates<strong> </label>
+                                                <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate" id="coordinate" step="1" value="{{ $spot->coordinates }}" >
                                                 @error('coordinate')
                                                     <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for=""> <strong> BranchName<strong> </label>
-                                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ $spot->name }}" >
-                                                @error('name')
+                                                <label for=""> <strong> Area <strong> </label>
+                                                <input type="number" class="form-control @error('area') is-invalid @enderror" name="area" id="area" value="{{ $spot->area }}" >
+                                                @error('area')
                                                 <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
                                             </div>
@@ -63,7 +70,7 @@
                                             @enderror
                                             <div class="d-flex justify-content-between">
                                                 <button type="submit" class="btn btn-primary btn-sm my-2"> Update Branch </button>
-                                                <button type="button" class="btn btn-danger btn-sm my-2" onclick="goBack()">Back</button>
+                                                <a href="{{ route('spot.index') }}" class="btn btn-danger btn-sm my-2">Back</a>
                                             </div>
                                         </form>
                                     </div>

@@ -38,6 +38,7 @@ class SpotController extends Controller
         $profileData = User::find($id);
 
         $centerPoint = Center_Point::get()->first();
+
         return view('Spot.create', ['centerPoint' => $centerPoint], compact('profileData'));
     }
 
@@ -52,6 +53,7 @@ class SpotController extends Controller
         $this->validate($request, [
             'coordinate' => 'required',
             'name' => 'required',
+            'area' => 'required',
             'description' => 'required',
             'image' => 'file|image|mimes:png,jpg,jpeg'
         ]);
@@ -66,14 +68,25 @@ class SpotController extends Controller
 
         $spot->name = $request->input('name');
         $spot->slug = Str::slug($request->name, '-');
+        $spot->area = $request->input('area');
         $spot->description = $request->input('description');
         $spot->coordinates = $request->input('coordinate');
         $spot->save();
 
+        $notification = array(
+            'message' => 'Branch Location Added Successfully',
+            'alert-type' => 'success'
+        );
+
+        $enotification = array(
+            'message' => 'Branch Location Not Added',
+            'alert-type' => 'error'
+        );
+
         if ($spot) {
-            return to_route('spot.index')->with('success', 'Data Success');
+            return to_route('spot.index')->with($notification);
         } else {
-            return to_route('spot.index')->with('error', 'Data Error');
+            return to_route('spot.index')->with($enotification);
         }
     }
 
@@ -110,6 +123,7 @@ class SpotController extends Controller
         $this->validate($request, [
             'coordinate' => 'required',
             'name' => 'required',
+            'area' => 'required',
             'description' => 'required',
             'image' => 'file|image|mimes:png,jpg,jpeg'
         ]);
@@ -132,14 +146,25 @@ class SpotController extends Controller
 
         $spot->name = $request->input('name');
         $spot->slug = Str::slug($request->name, '-');
+        $spot->area = $request->input('area');
         $spot->description = $request->input('description');
         $spot->coordinates = $request->input('coordinate');
         $spot->update();
 
+        $notification = array(
+            'message' => 'Branch Location Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        $enotification = array(
+            'message' => 'Branch Location Not Updated',
+            'alert-type' => 'error'
+        );
+
         if ($spot) {
-            return to_route('spot.index')->with('success', 'Data Updated Success');
+            return to_route('spot.index')->with($notification);
         } else {
-            return to_route('spot.index')->with('error', 'Data Error');
+            return to_route('spot.index')->with($enotification);
         }
     }
 
@@ -155,6 +180,12 @@ class SpotController extends Controller
 
         //Storage::disk('local')->delete('public/ImageSpots/' . ($spot->image));
         $spot->delete();
-        return redirect()->back();
+
+        $notification = array(
+            'message' => 'Branch Location Deleted Successfully',
+            'alert-type' => 'warning'
+        );
+
+        return redirect()->with($notification);
     }
 }

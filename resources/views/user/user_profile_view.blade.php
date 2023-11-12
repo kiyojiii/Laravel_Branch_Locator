@@ -26,7 +26,7 @@
                             <img class="wd-100 ht-100 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile">
                         </div>
                         <div class="profile-info">
-                            <span class="h4">{{$profileData->firstname}} {{$profileData->lastname}}</span>
+                            <span class="h4">{{$profileData->firstname}}</span>
                         </div>
                     </div>
                     <p>Hi! {{$profileData->firstname}} {{$profileData->lastname}}, You are a {{$profileData->role}}. We hope you enjoy your exploration and visit on our website.</p>
@@ -78,6 +78,14 @@
 
                     <form method="POST" action="{{ route('user.update') }}" class="forms-sample" enctype="multipart/form-data">
                         @csrf
+                      <!-- Add this section to display validation errors -->
+                      @if($errors->any())
+                            <script>
+                                $(document).ready(function () {
+                                    toastr.error('{{ implode(" & ", $errors->all()) }}', 'Validation Error');
+                                });
+                            </script>
+                        @endif
                        <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input name="username" type="text" class="form-control" id="username" autocomplete="off" value="{{ $profileData->username }} ">

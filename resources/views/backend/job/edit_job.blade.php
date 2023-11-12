@@ -80,9 +80,13 @@
 						<div class="col-sm-4">
                                 <div class="mb-3">
                                     <label class="form-label">Branch Location</label>
-                                    <input name="branchloc" type="text" class="form-control" value="{{ $jobs->branchloc }}">
+                                    <select name="branchloc" class="form-control" size="5" style="max-height: 120px; overflow-y: auto;" required>
+                                        @foreach ($branch as $spot)
+                                            <option value="{{ $spot->name }}" @if($jobs->branchloc == $spot->name) selected @endif>{{ $spot->name }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('branchloc')
-                                    <span class="text-danger">{{ $message }} </span>
+                                        <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>

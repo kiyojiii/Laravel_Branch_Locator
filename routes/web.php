@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/logout', [ProfileController::class, 'UserLogout'])->name('logout');
+
+    // LOGIN TO APPLY JOB
+    Route::get('/apply/job', [JobVacancyController::class, 'ApplyJob'])->name('apply.job');
 });
 
 require __DIR__ . '/auth.php';
@@ -64,6 +67,7 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
 }); // End Group Agent Middleware
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+Route::get('/user/login', [ProfileController::class, 'UserLogin'])->name('user.login');
 
 //Admin Job Vacancy CRUD
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -100,7 +104,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::resource('centerpoint', (\App\Http\Controllers\Backend\CenterPointController::class));
         Route::get('/edit/centerpoint/{id}', [CenterPointController::class, 'EditCenterPoint'])->name('edit.centerpoint');
         Route::post('/update/centerpoint', [CenterPointController::class, 'UpdateCenterPoint'])->name('update.centerpoint');
-        Route::get('/delete/job/{id}', [CenterPointController::class, 'DeleteCenterPoint'])->name('delete.centerpoint');
+        Route::get('/delete/centerpoint/{id}', [CenterPointController::class, 'DeleteCenterPoint'])->name('delete.centerpoint');
 
         ## Route Spot
         Route::get('/spot/data', [\App\Http\Controllers\Backend\DataController::class, 'spot'])->name('spot.data');
@@ -125,4 +129,5 @@ Route::controller(JobVacancyController::class)->group(function () {
 Route::controller(BranchController::class)->group(function () {
     Route::get('/branch-location', 'DisplayAllBranches')->name('branch-location');
     Route::get('/branch-detail/{slug}', 'DisplayBranchDetails')->name('branch-detail');
+    Route::get('/select-branch', [BranchController::class, 'SelectBranch'])->name('select-branch');
 });

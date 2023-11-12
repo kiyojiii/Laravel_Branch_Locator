@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\JobVacancy;
 use App\Models\User;
+use App\Models\Spot;
+use App\Models\Center_Point;
 
 class JobVacancyController extends Controller
 {
@@ -19,10 +21,18 @@ class JobVacancyController extends Controller
     }
     
     public function AddJob(){
+        $centerPoint = Center_Point::get()->first();
+        $spot = Spot::get();
+        $branch = Spot::orderBy('created_at', 'desc')->get(); 
+
         $id = Auth::user()->id;
         $profileData = User::find($id);
 
-        return view('backend.job.add_job',compact('profileData'));
+        return view('backend.job.add_job', [
+            'centerPoint' => $centerPoint,
+            'spot' => $spot,
+            'branch' => $branch
+        ], compact('profileData'));
     } // End Method
 
     public function StoreJob(Request $request) {
@@ -61,11 +71,18 @@ class JobVacancyController extends Controller
     // } // End Method
 
     public function EditJob($id){
+        $centerPoint = Center_Point::get()->first();
+        $spot = Spot::get();
+        $branch = Spot::orderBy('created_at', 'desc')->get(); 
+
         $profileData = User::find(Auth::user()->id);
-    
         $jobs = JobVacancy::findorFail($id);
     
-        return view('backend.job.edit_job', compact('jobs', 'profileData'));
+        return view('backend.job.edit_job',[
+            'centerPoint' => $centerPoint,
+            'spot' => $spot,
+            'branch' => $branch
+        ], compact('jobs', 'profileData'));
     } // End Method
     
 
@@ -135,6 +152,15 @@ class JobVacancyController extends Controller
     
         $jobs = JobVacancy::orderBy('created_at', 'desc')->get(); // Fetch jobs in descending order of 'created_at'
         return view('backend.userjob.user_all_jobs', compact('jobs', 'profileData'));
+    }
+
+    public function ApplyJob(){
+        if (auth()->check()) {
+            $id = Auth::user()->id;
+            $profileData = User::find($id);
+    
+            return view('backend.userjob.apply-job', compact('profileData'));
+    }
     }
 }
 // return view('backend.job.all_jobs', compact('jobs', 'profileData'));

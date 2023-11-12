@@ -89,24 +89,34 @@ class BranchController extends Controller
     /// Display User Branch Location
     public function DisplayAllBranches()
     {
-        $id = Auth::user()->id;
-        $profileData = User::find($id);
         $centerPoint = Center_Point::get()->first();
         $spot = Spot::get();
+        $branch = Spot::orderBy('created_at', 'desc')->get(); 
 
         return view('backend.userbranch.branch-location', [
             'centerPoint' => $centerPoint,
-            'spot' => $spot
-        ], compact('profileData'));
+            'spot' => $spot,
+            'branch' => $branch
+        ]);
 
     }
     public function DisplayBranchDetails($slug)
     {
-        $id = Auth::user()->id;
-        $profileData = User::find($id);
         $spot = Spot::where('slug',$slug)->first();
         return view('backend.userbranch.branch-details',[
             'spot' => $spot
-        ], compact('profileData'));
+        ]);
+    }
+
+    // Select 2 Branch Location
+    public function SelectBranch(Request $request)
+    {
+        $query = $request->get('q');
+
+        $locations = Spot::where('name', 'like', "%$query%")
+            ->select('id', 'name as text')
+            ->get();
+
+        return response()->json($locations);
     }
 }

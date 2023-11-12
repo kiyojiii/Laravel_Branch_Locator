@@ -57,7 +57,7 @@
                     <div class="navbar-nav ms-auto py-0 pe-4">
                         <a href="" class="nav-item nav-link active">Home</a>
                         <a href="{{ route('job-vacancies') }}" class="nav-item nav-link">Job Vacancies</a>
-                        <a href="service.html" class="nav-item nav-link">Branch Locator</a>
+                        <a href="{{ route('branch-location') }}" class="nav-item nav-link">Branch Locator</a>
                         <!-- <a href="menu.html" class="nav-item nav-link">Menu</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -77,7 +77,7 @@
                             <i class="fa fa-cog"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.user_profile') }}">Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf

@@ -31,14 +31,22 @@ class ProfileController extends Controller
     public function UserUpdate(Request $request){
         $id = Auth::user()->id;
         $data = User::find($id);
+    
+        // Validate the request data
+        $request->validate([
+            'username' => 'required|string|unique:users,username,' . $id,
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone' => 'required|string|unique:users,phone,' . $id,
+            // Add other validation rules for other fields
+        ]);
+    
         $data->username = $request->username;
         $data->firstname = $request->firstname;
         $data->lastname = $request->lastname;
         $data->phone = $request->phone;
         $data->email = $request->email;
         $data->address = $request->address;
-        $data->username = $request->username;
-
+    
         if($request->file('photo')){
             $file = $request->file('photo');
             @unlink(public_path('upload/user_images/'.$data->photo));
@@ -46,16 +54,17 @@ class ProfileController extends Controller
             $file->move(public_path('upload/user_images'),$filename);
             $data['photo'] = $filename;
         }
-
+    
         $data->save();
-
+    
         $notification = array(
             'message' => 'User Profile Updated Successfully',
             'alert-type' => 'success'
         );
-
+    
         return redirect()->back()->with($notification);
-    }// End Method
+    }
+    
 
     public function UserChangePassword(){
         $id = Auth::user()->id;
@@ -103,16 +112,10 @@ class ProfileController extends Controller
         return back()->with($notification);
     }// End Method
 
-
-
-
-
-
-
-
-
-
-
+    public function UserLogin()
+    {
+        return view('user.login');
+    } // End Method
 
 
 

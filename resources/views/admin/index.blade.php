@@ -2,10 +2,10 @@
 @section('admin')
 
 <div class="page-content">
-@include('sweetalert::alert')
+<!-- @include('sweetalert::alert') -->
         <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
           <div>
-            <h4 class="mb-3 mb-md-0">Welcome to Whitesands Admin Dashboard</h4>
+            <h4 class="mb-3 mb-md-0">Welcome to Admin Dashboard</h4>
           </div>
           <div class="d-flex align-items-center flex-wrap text-nowrap">
             <div class="input-group flatpickr wd-200 me-2 mb-2 mb-md-0" id="dashboardDate">
@@ -30,7 +30,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline">
-                      <h6 class="card-title mb-0">New Customers</h6>
+                      <h6 class="card-title mb-0">Available Jobs</h6>
                       <div class="dropdown mb-2">
                         <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -44,20 +44,42 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="row">
+                      @php
+                          $openJobsCount = \App\Models\JobVacancy::where('status', 'Open')->count();
+
+                          // Count of open jobs added in the past 30 days
+                          $openJobsAddedLast30Days = \App\Models\JobVacancy::where('status', 'Open')
+                              ->whereDate('created_at', '>=', now()->subDays(30))
+                              ->count();
+
+                          // Calculate the flat whole number change
+                          $opennumberChange = $openJobsAddedLast30Days;
+
+                          // Determine the arrow icon
+                          $openarrowIcon = $opennumberChange > 0 ? 'arrow-up' : 'arrow-down';
+
+                          // Determine the color class
+                          $opencolorClass = $opennumberChange > 0 ? 'text-success' : 'text-danger';
+                      @endphp
+
                       <div class="col-6 col-md-12 col-xl-5">
-                        <h3 class="mb-2">3,897</h3>
-                        <div class="d-flex align-items-baseline">
-                          <p class="text-success">
-                            <span>+3.3%</span>
-                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                          </p>
-                        </div>
+                          <h3 class="mb-2">{{ $openJobsCount }}</h3>
+                          <div class="d-flex align-items-baseline">
+                              <p class="{{ $opencolorClass }}">
+                                  <span>+ {{ $opennumberChange }}</span>
+                                  <i data-feather="{{ $openarrowIcon }}" class="icon-sm mb-1"></i>
+                                  in the past 30 days
+                              </p>
+                          </div>
                       </div>
+
                       <div class="col-6 col-md-12 col-xl-7">
-                        <div id="customersChart" class="mt-md-3 mt-xl-0"></div>
+                          <div id="customersChart" class="mt-md-3 mt-xl-0"></div>
                       </div>
-                    </div>
+                  </div>
+
                   </div>
                 </div>
               </div>
@@ -65,7 +87,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline">
-                      <h6 class="card-title mb-0">New Orders</h6>
+                      <h6 class="card-title mb-0">Total Users</h6>
                       <div class="dropdown mb-2">
                         <a type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -79,20 +101,41 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="row">
-                      <div class="col-6 col-md-12 col-xl-5">
-                        <h3 class="mb-2">35,084</h3>
+                    @php
+                        $usersCount = \App\Models\User::count();
+
+                        // Count of users added in the past 30 days
+                        $usersAddedLast30Days = \App\Models\User::whereDate('created_at', '>=', now()->subDays(30))
+                            ->count();
+
+                        // Calculate the flat whole number change
+                        $usersNumberChange = $usersAddedLast30Days;
+
+                        // Determine the arrow icon
+                        $usersArrowIcon = $usersNumberChange > 0 ? 'arrow-up' : 'arrow-down';
+
+                        // Determine the color class
+                        $usersColorClass = $usersNumberChange > 0 ? 'text-success' : 'text-danger';
+                    @endphp
+
+                    <div class="col-6 col-md-12 col-xl-5">
+                        <h3 class="mb-2">{{ $usersCount }}</h3>
                         <div class="d-flex align-items-baseline">
-                          <p class="text-danger">
-                            <span>-2.8%</span>
-                            <i data-feather="arrow-down" class="icon-sm mb-1"></i>
-                          </p>
+                            <p class="{{ $usersColorClass }}">
+                                <span>+ {{ $usersNumberChange }}</span>
+                                <i data-feather="{{ $usersArrowIcon }}" class="icon-sm mb-1"></i>
+                                in the past 30 days
+                            </p>
                         </div>
-                      </div>
-                      <div class="col-6 col-md-12 col-xl-7">
-                        <div id="ordersChart" class="mt-md-3 mt-xl-0"></div>
-                      </div>
                     </div>
+
+                    <div class="col-6 col-md-12 col-xl-7">
+                        <div id="ordersChart" class="mt-md-3 mt-xl-0"></div>
+                    </div>
+                </div>
+
                   </div>
                 </div>
               </div>
@@ -100,7 +143,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline">
-                      <h6 class="card-title mb-0">Growth</h6>
+                      <h6 class="card-title mb-0">Branches</h6>
                       <div class="dropdown mb-2">
                         <a type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -114,20 +157,41 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="row">
-                      <div class="col-6 col-md-12 col-xl-5">
-                        <h3 class="mb-2">89.87%</h3>
+                    @php
+                        $branchesCount = \App\Models\Spot::count();
+
+                        // Count of branches added in the past 30 days
+                        $branchesAddedLast30Days = \App\Models\Spot::whereDate('created_at', '>=', now()->subDays(30))
+                            ->count();
+
+                        // Calculate the flat whole number change
+                        $branchesNumberChange = $branchesAddedLast30Days;
+
+                        // Determine the arrow icon
+                        $branchesArrowIcon = $branchesNumberChange > 0 ? 'arrow-up' : 'arrow-down';
+
+                        // Determine the color class
+                        $branchesColorClass = $branchesNumberChange > 0 ? 'text-success' : 'text-danger';
+                    @endphp
+
+                    <div class="col-6 col-md-12 col-xl-5">
+                        <h3 class="mb-2">{{ $branchesCount }}</h3>
                         <div class="d-flex align-items-baseline">
-                          <p class="text-success">
-                            <span>+2.8%</span>
-                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                          </p>
+                            <p class="{{ $branchesColorClass }}">
+                                <span>+ {{ $branchesNumberChange }}</span>
+                                <i data-feather="{{ $branchesArrowIcon }}" class="icon-sm mb-1"></i>
+                                in the past 30 days
+                            </p>
                         </div>
-                      </div>
-                      <div class="col-6 col-md-12 col-xl-7">
-                        <div id="growthChart" class="mt-md-3 mt-xl-0"></div>
-                      </div>
                     </div>
+
+                    <div class="col-6 col-md-12 col-xl-7">
+                        <div id="growthChart" class="mt-md-3 mt-xl-0"></div>
+                    </div>
+                </div>
+
                   </div>
                 </div>
               </div>
@@ -138,33 +202,49 @@
 
         <div class="row">
           <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-baseline mb-2">
-                  <h6 class="card-title mb-0">Monthly sales</h6>
+            
+          <div class="card">
+
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-baseline mb-2">
+                  <h6 class="card-title mb-0">Monthly Job Listing</h6>
                   <div class="dropdown mb-2">
-                    <a type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                      <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                      <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                      <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
-                      <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
-                      <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
-                    </div>
+                      <a type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer" class="icon-sm me-2"></i> <span class="">Print</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download" class="icon-sm me-2"></i> <span class="">Download</span></a>
+                      </div>
                   </div>
-                </div>
-                <p class="text-muted">Sales are activities related to selling or the number of goods or services sold in a given time period.</p>
-                <div id="monthlySalesChart"></div>
-              </div> 
+              </div>
+              <p class="text-muted">Monthly Count Of Open and Closed Jobs</p>
+              <canvas id="chart"></canvas>
+      <script>
+        var ctx = document.getElementById('chart').getContext('2d');
+        var userChart = new Chart(ctx, {
+            type: 'bar',
+            data:{
+              labels: {!! json_encode($labels) !!},
+              datasets: {!! json_encode($datasets) !!}
+            },
+        });
+      </script>
+          </div>
+
+
             </div>
           </div>
           <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-baseline">
-                  <h6 class="card-title mb-0">Cloud storage</h6>
+                  <h6 class="card-title mb-0">User Proportion</h6>
                   <div class="dropdown mb-2">
                     <a type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -178,30 +258,51 @@
                     </div>
                   </div>
                 </div>
-                <div id="storageChart"></div>
+                <canvas id="userchart"> </canvas>
+                <script>
+                  var ctx = document.getElementById('userchart').getContext('2d');
+                  var userChart = new Chart(ctx, {
+                      type: 'pie',
+                      data: {
+                          labels: {!! json_encode($userlabels) !!},
+                          datasets: [{
+                              data: {!! json_encode($userdata) !!},
+                              backgroundColor: {!! json_encode($usercolors) !!}
+                          }]
+                      },
+                  });
+              </script>
+
                 <div class="row mb-3">
                   <div class="col-6 d-flex justify-content-end">
                     <div>
-                      <label class="d-flex align-items-center justify-content-end tx-10 text-uppercase fw-bolder">Total storage <span class="p-1 ms-1 rounded-circle bg-secondary"></span></label>
-                      <h5 class="fw-bolder mb-0 text-end">8TB</h5>
+                      <label class="d-flex align-items-center justify-content-end tx-10 text-uppercase fw-bolder">Total Admins <span class="p-1 ms-1 rounded-circle bg-primary"></span></label>
+                      @php
+                      $totaladmin = \App\Models\User::where('role', 'admin')->count();
+                      @endphp
+                      <h5 class="fw-bolder mb-0 text-end">{{ $totaladmin}}</h5>
                     </div>
                   </div>
                   <div class="col-6">
                     <div>
-                      <label class="d-flex align-items-center tx-10 text-uppercase fw-bolder"><span class="p-1 me-1 rounded-circle bg-primary"></span> Used storage</label>
-                      <h5 class="fw-bolder mb-0">~5TB</h5>
+                      <label class="d-flex align-items-center tx-10 text-uppercase fw-bolder"><span class="p-1 me-1 rounded-circle bg-danger"></span> Total Users</label>
+                      @php
+                      $totaluser = \App\Models\User::where('role', 'user')->count();
+                      @endphp
+                      <h5 class="fw-bolder mb-0">{{ $totaluser }}</h5>
                     </div>
                   </div>
                 </div>
                 <div class="d-grid">
-                  <button class="btn btn-primary">Upgrade storage</button>
+                  <a href="#" class="btn btn-primary">Show All</a>
                 </div>
               </div>
             </div>
           </div>
         </div> <!-- row -->
 
-        <div class="row">
+        <!-- start row
+          <div class="row">
           <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
             <div class="card">
               <div class="card-body">
@@ -379,7 +480,8 @@
               </div> 
             </div>
           </div>
-        </div> <!-- row -->
+        </div> 
+        end row -->
 
 			</div>
 

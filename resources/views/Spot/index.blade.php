@@ -50,7 +50,8 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Name</th>
+                                        <th>Branch Name</th>
+                                        <th>Area</th>
                                         <th>Coordinates</th>
                                         <th>Action</th>
                                     </tr>

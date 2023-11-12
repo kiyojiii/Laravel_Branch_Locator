@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('area');
             $table->string('coordinates');
             $table->longText('description');
-            $table->string('image')->nullabe();
+            $table->string('image')->default('')->nullable();
             $table->timestamps();
         });
     }

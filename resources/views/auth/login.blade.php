@@ -12,6 +12,8 @@
   <script src="https://kit.fontawesome.com/334c45a40c.js" crossorigin="anonymous"></script>
   <!-- Include SweetAlert CSS and JS from a CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.12/dist/sweetalert2.min.css">
+  <!-- TOASTER -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
 
 <body style="background: url('{{ asset('backend/assets3/images/login_background.png') }}'); background-size: cover;">
@@ -88,6 +90,14 @@
                 <span class="borderLine"></span>
                 <form method="POST" action="{{ route('register') }}">
                 @csrf
+                 <!-- Add this section to display validation errors -->
+                  @if($errors->any())
+                      <script>
+                              $(document).ready(function () {
+                                  toastr.error('{{ implode(" & ", $errors->all()) }}', 'Validation Error');
+                              });
+                      </script>
+                  @endif
                   <h2>SIGNUP</h2>
                   <div class="inputBox">
                     <input input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
@@ -125,8 +135,19 @@
 <!-- login and register js -->
 <script src="{{ asset('backend/assets3/js/loginscript.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.12/dist/sweetalert2.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 <script>
+    // Check if the apply now button is clicked and the user is not logged in
+    @if(!auth()->check())
+        Swal.fire({
+            icon: 'error',
+            title: 'You must be logged in',
+            text: 'Please log in to access the features of WhiteSands',
+        });
+    @endif
+
     // Check if there are validation errors
     @if($errors->any())
         // Create a function to display the error message as a SweetAlert
@@ -147,5 +168,29 @@
         showValidationErrors();
     @endif
 </script>
+
+
+<script>
+		@if(Session::has('message'))
+		var type = "{{ Session::get('alert-type','info') }}"
+		switch (type) {
+			case 'info':
+				toastr.info(" {{ Session::get('message') }} ");
+				break;
+
+			case 'success':
+				toastr.success(" {{ Session::get('message') }} ");
+				break;
+
+			case 'warning':
+				toastr.warning(" {{ Session::get('message') }} ");
+				break;
+
+			case 'error':
+				toastr.error(" {{ Session::get('message') }} ");
+				break;
+		}
+		@endif
+	</script>
 
 </html>

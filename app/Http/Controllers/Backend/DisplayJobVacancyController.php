@@ -22,4 +22,11 @@ class DisplayJobVacancyController extends Controller
         $jobs = JobVacancy::orderBy('created_at', 'desc')->get(); // Fetch jobs in descending order of 'created_at'
         return view('job.userjob.user_all_jobs', compact('jobs', 'profileData'));
     }
+
+    public function ApplyJob(){
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+
+        return view('userjob.apply.job', compact('profileData'));
+    }
 }

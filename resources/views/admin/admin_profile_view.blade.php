@@ -23,10 +23,10 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
                         <div class="profile-image"> <!-- Added a container div for styling -->
-                            <img class="wd-100 ht-100 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile">
+                            <img class="wd-65 ht-60 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile">
                         </div>
                         <div class="profile-info">
-                            <span class="h4">{{$profileData->firstname}} {{$profileData->lastname}}</span>
+                            <span class="h4">{{$profileData->firstname}}</span>
                         </div>
                     </div>
                     <p>Hi! {{$profileData->firstname}} {{$profileData->lastname}}, You are a {{$profileData->role}}. Please do moderate the website carefully.</p>
@@ -78,6 +78,14 @@
 
                     <form method="POST" action="{{ route('admin.update') }}" class="forms-sample" enctype="multipart/form-data">
                         @csrf
+                             <!-- Add this section to display validation errors -->
+                        @if($errors->any())
+                            <script>
+                                $(document).ready(function () {
+                                    toastr.error('{{ implode(" & ", $errors->all()) }}', 'Validation Error');
+                                });
+                            </script>
+                        @endif
                        <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input name="username" type="text" class="form-control" id="username" autocomplete="off" value="{{ $profileData->username }} ">
@@ -108,7 +116,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="photo" class="form-label">Current Photo:</label>
-                            <img id="showImage" class="wd-65 ht-60 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
+                            <img id="showImage" class="wd-65 ht-60 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
                         </div>
                         <div class="d-flex justify-content-between">
                         <div>

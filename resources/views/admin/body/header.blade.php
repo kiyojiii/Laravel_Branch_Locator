@@ -45,7 +45,7 @@
                     <a href="pages/email/inbox.html" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="mail" class="icon-lg mb-1"></i><p class="tx-12">Email</p></a>
                   </div>
                   <div class="col-3 text-center">
-                    <a href="pages/general/profile.html" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="instagram" class="icon-lg mb-1"></i><p class="tx-12">Profile</p></a>
+                    <a href="{{route('admin.profile')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="instagram" class="icon-lg mb-1"></i><p class="tx-12">Profile</p></a>
                   </div>
                 </div>
 								<div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
@@ -203,12 +203,12 @@
 						</li>
 						<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img class="wd-50 ht-50 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
+              <img class="wd-50 ht-50 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
            </a>
            <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
               <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
                   <div class="mb-3">
-                      <img class="wd-60 ht-60 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
+                      <img class="wd-60 ht-60 rounded-circle" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="profile" style="border: 1px solid #000;">
                   </div>
 									<div class="text-center">
 										<p class="tx-16 fw-bolder">{{$profileData->firstname}} {{$profileData->lastname}}</p>

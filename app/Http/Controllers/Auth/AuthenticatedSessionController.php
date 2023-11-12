@@ -45,11 +45,12 @@ class AuthenticatedSessionController extends Controller
         $firstName = $request->user()->firstname; // Get the user's first name
         $lastName = $request->user()->lastname;   // Get the user's last name
 
-        if (Auth::check()) {
-        Alert::success('Login Successful', 'Welcome Back ' . $firstName . ' ' . $lastName);
-        }
-    
-        return redirect()->intended($url);
+        $enotification = array(
+            
+            'message' => 'Logged in Successful', 'Welcome Back ' . $firstName . ' ' . $lastName,
+            'alert-type' => 'success'
+        );
+        return redirect()->intended($url)->with($enotification);
     }
 
     /**

@@ -95,7 +95,7 @@
                             </ul>
                         </div>
                         @else
-                        <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
+                        <a href="{{ route('user.login') }}" class="btn btn-primary py-2 px-4">Log in</a>
 
                         @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="btn btn-secondary py-2 px-4">Register</a>
@@ -110,8 +110,8 @@
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Branch Locations</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center text-uppercase">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item text-white active"><a href="#">Branch Locator</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                            <li class="breadcrumb-item text-white active"><a href="{{ route('branch-location') }}">Branch Locator</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -152,7 +152,7 @@
                                     $branches = \App\Models\Spot::count();
                                     @endphp
                                     <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">{{ $branches }}</h1>
-                                    <div class="ps-4">
+                                    <div class="ps-3">
                                         <p class="mb-0">Total</p>
                                         <h6 class="text-uppercase mb-0">NMPC Branches</h6>
                                     </div>
@@ -185,7 +185,28 @@
             <div class="card">
                 <div class="card-header"><strong>Branch List</strong></div>
                 <div class="card-body">
-                    HERE GOES LIST OF BRANCHES
+                <div class="table-responsive">
+                <table class="table table-hover" id="branchlist">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Area</th>
+                            <th class="text-center">Branch</th>
+                            <th class="text-center">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($branch as $key => $data)
+                        <tr>
+                            <td class="text-center">{{ $data->area }}</td>
+                            <td class="text-center">{{ $data->name }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('branch-detail',$data->slug) }}" class="btn btn-primary btn-sm">View</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                </div>
                 </div>
             </div>
         </div>
@@ -193,7 +214,7 @@
             <div class="card">
             <div class="card-header"><strong>Branch Locations</strong></div>
                 <div class="card-body">
-                    <div id="map" style="width: 800px; height: 500px;"></div>
+                    <div id="map" style="width: 844px; height: 500px;"></div>
                 </div>
             </div>
         </div>
@@ -395,6 +416,17 @@
         }
 
         const layerControl = L.control.layers(baseLayers).addTo(map)
+    </script>
+
+        <!-- Initialize DataTables for the tables -->
+        <script>
+        $(document).ready(function() {
+            $('#branchlist').DataTable
+            ({
+                "lengthMenu": [7, 10, 25, 50], 
+                "pageLength": 7, 
+            });
+        });
     </script>
 
 </body>

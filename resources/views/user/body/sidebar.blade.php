@@ -65,22 +65,7 @@
             <div class="collapse" id="general-pages">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="pages/general/blank-page.html" class="nav-link">Blank page</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/general/faq.html" class="nav-link">Faq</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/general/invoice.html" class="nav-link">Invoice</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/general/profile.html" class="nav-link">Profile</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/general/pricing.html" class="nav-link">Pricing</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/general/timeline.html" class="nav-link">Timeline</a>
+                  <a href="{{ route('user.user_profile') }}" class="nav-link">Profile</a>
                 </li>
               </ul>
             </div>

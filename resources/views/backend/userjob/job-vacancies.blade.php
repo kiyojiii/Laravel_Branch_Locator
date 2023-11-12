@@ -61,7 +61,7 @@
                     <div class="navbar-nav ms-auto py-0 pe-4">
                         <a href="{{ url('') }}" class="nav-item nav-link">Home</a>
                         <a href="{{ route('job-vacancies') }}" class="nav-item nav-link active">Job Vacancies</a>
-                        <a href="service.html" class="nav-item nav-link">Branch Locator</a>
+                        <a href="{{ route('branch-location') }}" class="nav-item nav-link">Branch Locator</a>
                         <!-- <a href="menu.html" class="nav-item nav-link">Menu</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -81,7 +81,7 @@
                             <i class="fa fa-cog"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.user_profile') }}">Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -89,7 +89,7 @@
                         </ul>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4">Log in</a>
+                    <a href="{{ route('user.login') }}" class="btn btn-primary py-2 px-4">Log in</a>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="btn btn-secondary py-2 px-4">Register</a>
@@ -104,8 +104,8 @@
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Job Vacancies</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center text-uppercase">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item text-white active"><a href="#">Job Vacancies</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                            <li class="breadcrumb-item text-white active"><a href="{{ route('job-vacancies') }}">Job Vacancies</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -165,7 +165,7 @@
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2 btn-sm" href="">Apply Now</a>
+                    <a class="btn btn-primary py-3 px-5 mt-2 btn-sm" href="{{ route('apply.job') }}">Apply Now</a>
                     </div>
                 </div>
             </div>
@@ -184,24 +184,28 @@
                 <table class="table table-hover" id="openJobListTable">
                     <thead>
                         <tr>
-                            <th>Slot(s)</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Branch</th>
+                            <th class="text-center">Slot(s)</th>
+                            <th class="text-center">Position</th>
+                            <!-- <th>Department</th> -->
+                            <th class="text-center">Branch</th>
                             <!-- <th>Status</th> -->
-                            <th>Date Posted</th>
+                            <th class="text-center">Date Posted</th>
+                            <th class="text-center"> Apply Now </th>
                         </tr>
                     </thead>
                     <tbody>
                     @foreach($jobs as $key => $data)
                         @if($data->status === 'Open')
                         <tr>
-                            <td>{{ $data->slots }}</td>
-                            <td>{{ $data->position }}</td>
-                            <td>{{ $data->department }}</td>
-                            <td>{{ $data->branchloc }}</td>
+                            <td class="text-center">{{ $data->slots }}</td>
+                            <td class="text-center">{{ $data->position }}</td>
+                            <!-- <td>{{ $data->department }}</td> -->
+                            <td class="text-center">{{ $data->branchloc }}</td>
                             <!-- <td>{{ $data->status }}</td> -->
-                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('apply.job') }}" class="btn btn-primary btn-sm">Apply</a>
+                            </td>
                         </tr>
                         @endif
                     @endforeach
@@ -214,34 +218,37 @@
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Closed Job Listing</h6>
-                <p class="text-muted mb-3"> <span style="color: red; font-weight: bold;">Closed  Jobs</span></p>
+                <h6 class="card-title">Recent Opened Jobs</h6>
+                <p class="text-muted mb-3"> <span style="color: green; font-weight: bold;">Recent Opened Jobs These Past 30 Days</span></p>
                 <div class="table-responsive">
                     <table class="table table-hover" id="closedJobListTable">
                     <thead>
                             <tr>
-                                <th>Slot(s)</th>
-                                <th>Position</th>
-                                <th>Department</th>
-                                <th>Branch</th>
+                                <th class="text-center">Slot(s)</th>
+                                <th class="text-center">Position</th>
+                                <!-- <th>Department</th> -->
+                                <th class="text-center">Branch</th>
                                 <!-- <th>Status</th> -->
-                                <th>Date Posted</th>
+                                <th class="text-center">Date Posted</th>
+                                <th class="text-center"> Apply Now </th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($jobs as $key => $data)
-                        @if($data->status === 'Closed')
-                            <tr>
-                            <td>{{ $data->slots }}</td>
-                            <td>{{ $data->position }}</td>
-                            <td>{{ $data->department }}</td>
-                            <td>{{ $data->branchloc }}</td>
-                            <!-- <td>{{ $data->status }}</td> -->
-                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
-                            </tr>
-                        @endif
+                            @if($data->status === 'Open' && \Carbon\Carbon::parse($data->created_at)->diffInDays(\Carbon\Carbon::now()) <= 15)
+                                <tr>
+                                    <td class="text-center">{{ $data->slots }}</td>
+                                    <td class="text-center">{{ $data->position }}</td>
+                                    <!-- <td>{{ $data->department }}</td> -->
+                                    <td class="text-center">{{ $data->branchloc }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('apply.job') }}" class="btn btn-primary btn-sm">Apply</a>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
-                        </tbody>
+                    </tbody>
                     </table>
                 </div>
             </div>
@@ -267,13 +274,14 @@
                        <table id="AllJobListTable" class="table table-striped">
     <thead>
         <tr>
-            <th>No.</th>
-            <th>Slots</th>
-            <th>Position</th>
-            <th>Department</th>
-            <th>Branch</th>
-            <th>Status</th>
-            <th>Date Posted</th>
+            <th class="text-center">No.</th>
+            <th class="text-center">Slots</th>
+            <th class="text-center">Position</th>
+            <th class="text-center">Department</th>
+            <th class="text-center">Branch</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Date Posted</th>
+            <th class="text-center"> Apply Now </th>
         </tr>
     </thead>
     <tbody>
@@ -283,16 +291,19 @@
         @endphp
         @foreach($jobs as $key => $data)
         <tr>
-            <td>{{ $rowNumber++ }}</td>
-            <td>{{ $data->slots }}</td>
-            <td>{{ $data->position }}</td>
-            <td>{{ $data->department }}</td>
-            <td>{{ $data->branchloc }}</td>                 
-            <td style="position: relative;">
+            <td class="text-center">{{ $rowNumber++ }}</td>
+            <td class="text-center">{{ $data->slots }}</td>
+            <td class="text-center">{{ $data->position }}</td>
+            <td class="text-center">{{ $data->department }}</td>
+            <td class="text-center">{{ $data->branchloc }}</td>                 
+            <td class="text-center" style="position: relative;">
                 <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: {{ $data->status === 'Open' ? 'green' : 'red' }}; margin-right: 8px;"></span>
                 {{ $data->status }}
             </td>
-            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+            <td class="text-center">{{ \Carbon\Carbon::parse($data->created_at)->format('F d, Y') }}</td>
+            <td class="text-center">
+                <a href="{{ route('apply.job') }}" class="btn btn-primary btn-sm">Apply</a>
+            </td>
         </tr>
         @endforeach
     </tbody>
@@ -357,7 +368,7 @@
                                 <a href="{{ url('') }}">Home</a>
                                 <a href="{{ route('user.user_profile') }}">Profile</a>
                                 <a href="{{ route('job-vacancies') }}">Job Vacancies</a>
-                                <a href="">Branch Locator</a>
+                                <a href="{{ route('branch-location') }}">Branch Locator</a>
                             </div>
                         </div>
                     </div>
@@ -388,25 +399,25 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <!-- Initialize DataTables for the tables -->
-<script>
-    $(document).ready(function() {
-        $('#openJobListTable').DataTable
-        ({
-            "lengthMenu": [8, 10, 25, 50], 
-            "pageLength": 8, 
+    <script>
+        $(document).ready(function() {
+            $('#openJobListTable').DataTable
+            ({
+                "lengthMenu": [6, 10, 25, 50], 
+                "pageLength": 6, 
+            });
+            $('#closedJobListTable').DataTable
+            ({
+                "lengthMenu": [6, 10, 25, 50], 
+                "pageLength": 6, 
+            });
+            $('#AllJobListTable').DataTable
+            ({
+                order: [[0, "desc"]],
+                "lengthMenu": [8, 10, 25, 50], 
+                "pageLength": 8, 
+            });
         });
-        $('#closedJobListTable').DataTable
-        ({
-            "lengthMenu": [8, 10, 25, 50], 
-            "pageLength": 8, 
-        });
-        $('#AllJobListTable').DataTable
-        ({
-            order: [[0, "desc"]],
-            "lengthMenu": [8, 10, 25, 50], 
-            "pageLength": 8, 
-        });
-    });
-</script>
+    </script>
 </body>
 

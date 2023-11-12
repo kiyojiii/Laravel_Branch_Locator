@@ -52,7 +52,7 @@
 
 <body>
 	<div class="main-wrapper">
-		@include('sweetalert::alert')
+		<!-- @include('sweetalert::alert') -->
 		<!-- partial:partials/_sidebar.html -->
 		@include('admin.body.sidebar')
 		<!-- partial -->
@@ -97,8 +97,11 @@
 	<script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
 	<!-- Toastr -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+	<!-- Leaflet -->
 	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+	<!-- Chart JS -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
 
 	<script>
 		@if(Session::has('message'))
@@ -232,8 +235,11 @@
 					}, {
 						data: 'name'
 					}, {
+						data: 'area'
+					},	{
 						data: 'coordinates'
-					}, {
+					}, 
+						{
 						data: 'action'
 					}
 				]
@@ -248,6 +254,50 @@
             })
         }, 3000);
     </script>
+
+<script>
+    $('#jobdelete').on('click', function(e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteData').action = href
+                document.getElementById('deleteData').submit()
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+    })
+</script>
+
+<!-- <script>
+    $(document).ready(function () {
+        // Initialize Select2
+        $('#branchLocationSelect').select2({
+            placeholder: 'Select a location',
+            ajax: {
+                url: '{{route('select-branch')}}',
+                dataType: 'json',
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+            }
+        });
+    });
+</script> -->
 
 </body>
 </html>
