@@ -2,7 +2,7 @@
 <nav class="sidebar">
       <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
-          White<span>Sands</span>
+          MSU-IIT<span>&nbsp;NMPC</span>
         </a>
         <div class="sidebar-toggler not-active">
           <span></span>
@@ -23,7 +23,7 @@
           <li class="nav-item">
             <a href="{{ url('')}}" class="nav-link">
               <i class="link-icon" data-feather="map-pin"></i>
-              <span class="link-title">Whitesands</span>
+              <span class="link-title">MSU-IIT NMPC</span>
             </a>
           </li>
           <li class="nav-item nav-category">Job Vacancy</li>
@@ -110,13 +110,13 @@
               </ul>
             </div>
           </li> 
-          <li class="nav-item nav-category">Docs</li>
+          <!-- <li class="nav-item nav-category">Docs</li>
           <li class="nav-item">
             <a href="https://www.nobleui.com/html/documentation/docs.html" target="_blank" class="nav-link">
               <i class="link-icon" data-feather="hash"></i>
               <span class="link-title">Documentation</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>

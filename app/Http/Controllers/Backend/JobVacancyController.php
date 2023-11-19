@@ -138,8 +138,11 @@ class JobVacancyController extends Controller
     public function DisplayAllJobs()
     {
         $jobs = JobVacancy::orderBy('created_at', 'desc')->get(); // Fetch jobs in descending order of 'created_at'
-        
-        return view('backend.userjob.job-vacancies', compact('jobs'));
+        $jobs2 = JobVacancy::orderBy('created_at', 'desc')->get(); // Fetch jobs in descending order of 'created_at'
+       
+        $jobs2 = $jobs2->where('status', 'Open')->sortByDesc('created_at');
+  
+        return view('backend.userjob.job-vacancies', compact('jobs','jobs2'));
     }
 
     public function UserHome(){

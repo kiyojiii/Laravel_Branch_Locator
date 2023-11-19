@@ -117,6 +117,16 @@ class ProfileController extends Controller
         return view('user.login');
     } // End Method
 
+    public function About()
+    {
+        return view('backend.userjob.about');
+    }
+
+    public function Testimonial()
+    {
+        return view('backend.userjob.testimonials');
+    }
+
 
 
 

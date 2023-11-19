@@ -32,6 +32,12 @@
                                         <form action="{{ route('spot.store') }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group">
+                                                <label for=""> <strong>Branch Coordinates</strong> </label>
+                                                <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate">
+                                                @error('coordinate')
+                                                <div class="invalid-feedback">{{ $message }} </div>
+                                                @enderror
+                                            </div><br>
                                             <div class="form-group">
                                                 <label for=""> <strong>Branch Name</strong> </label>
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name">
@@ -39,9 +45,17 @@
                                                 <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
                                             </div><br>
-                                                <label for=""> <strong>Branch Coordinates</strong> </label>
-                                                <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate">
-                                                @error('coordinate')
+                                            <div class="form-group">
+                                                <label for=""> <strong>Branch Address</strong> </label>
+                                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="address">
+                                                @error('address')
+                                                <div class="invalid-feedback">{{ $message }} </div>
+                                                @enderror
+                                            </div><br>
+                                            <div class="form-group">
+                                                <label for=""> <strong>Branch Contact Number</strong> </label>
+                                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="contact">
+                                                @error('contact')
                                                 <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
                                             </div><br>

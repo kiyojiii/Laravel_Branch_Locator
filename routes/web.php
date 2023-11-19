@@ -131,3 +131,7 @@ Route::controller(BranchController::class)->group(function () {
     Route::get('/branch-detail/{slug}', 'DisplayBranchDetails')->name('branch-detail');
     Route::get('/select-branch', [BranchController::class, 'SelectBranch'])->name('select-branch');
 });
+
+// User About, Testimonials, Contact
+Route::get('/about', [ProfileController::class, 'About'])->name('about');
+Route::get('/testimonials', [ProfileController::class, 'Testimonial'])->name('testimonial');

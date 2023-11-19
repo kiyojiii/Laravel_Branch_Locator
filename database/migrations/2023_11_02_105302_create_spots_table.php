@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('slug');
             $table->string('area');
             $table->string('coordinates');
+            $table->string('address');  
+            $table->string('contact');
             $table->longText('description');
             $table->string('image')->default('')->nullable();
             $table->timestamps();

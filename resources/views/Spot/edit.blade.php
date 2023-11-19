@@ -33,6 +33,13 @@
                                             @csrf
                                             @method('PUT')
                                             <div class="form-group">
+                                                <label for=""> <strong> Branch Coordinates<strong> </label>
+                                                <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate" id="coordinate" step="1" value="{{ $spot->coordinates }}" >
+                                                @error('coordinate')
+                                                    <div class="invalid-feedback">{{ $message }} </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
                                                 <label for=""> <strong> Branch Name<strong> </label>
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ $spot->name }}" >
                                                 @error('name')
@@ -40,10 +47,17 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for=""> <strong> Branch Coordinates<strong> </label>
-                                                <input type="text" class="form-control @error('coordinate') is-invalid @enderror" name="coordinate" id="coordinate" step="1" value="{{ $spot->coordinates }}" >
-                                                @error('coordinate')
-                                                    <div class="invalid-feedback">{{ $message }} </div>
+                                                <label for=""> <strong> Branch Address <strong> </label>
+                                                <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="address" value="{{ $spot->address }}" >
+                                                @error('address')
+                                                <div class="invalid-feedback">{{ $message }} </div>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for=""> <strong> Branch Contact Number<strong> </label>
+                                                <input type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" id="contact" value="{{ $spot->contact }}" >
+                                                @error('contact')
+                                                <div class="invalid-feedback">{{ $message }} </div>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
@@ -55,7 +69,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for=""> <strong> Upload Branch Image<strong></label>
-                                                <img src="{{ $spot->getImageAsset() }}" class="form-control" alt="">
+                                                <img width="200" height="200" src="{{ $spot->getImageAsset() }}" class="form-control" alt="">
                                                 <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
                                                 @error('image')
                                                 <div class="invalid-feedback">{{ $message }} </div>

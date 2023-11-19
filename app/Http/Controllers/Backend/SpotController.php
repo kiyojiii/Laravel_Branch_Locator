@@ -51,8 +51,10 @@ class SpotController extends Controller
         $profileData = User::find($id);
 
         $this->validate($request, [
-            'coordinate' => 'required',
-            'name' => 'required',
+            'coordinate' => 'required|unique:spots,coordinates,',
+            'name' => 'required|unique:spots,name,',
+            'address' => 'required',
+            'contact' => 'required',
             'area' => 'required',
             'description' => 'required',
             'image' => 'file|image|mimes:png,jpg,jpeg'
@@ -68,6 +70,8 @@ class SpotController extends Controller
 
         $spot->name = $request->input('name');
         $spot->slug = Str::slug($request->name, '-');
+        $spot->address = $request->input('address');
+        $spot->contact = $request->input('contact');
         $spot->area = $request->input('area');
         $spot->description = $request->input('description');
         $spot->coordinates = $request->input('coordinate');
@@ -123,6 +127,8 @@ class SpotController extends Controller
         $this->validate($request, [
             'coordinate' => 'required',
             'name' => 'required',
+            'address' => 'required',
+            'contact' => 'required',
             'area' => 'required',
             'description' => 'required',
             'image' => 'file|image|mimes:png,jpg,jpeg'
@@ -146,6 +152,8 @@ class SpotController extends Controller
 
         $spot->name = $request->input('name');
         $spot->slug = Str::slug($request->name, '-');
+        $spot->address = $request->input('address');
+        $spot->contact = $request->input('contact');
         $spot->area = $request->input('area');
         $spot->description = $request->input('description');
         $spot->coordinates = $request->input('coordinate');

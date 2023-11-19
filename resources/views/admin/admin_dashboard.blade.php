@@ -33,7 +33,11 @@
 	<!-- Layout styles -->
 	<link rel="stylesheet" href="{{ asset('backend/assets/css/demo1/style.css') }}">
 	<!-- End layout styles -->
-	<link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.png') }}" />
+	
+    <!-- Favicons -->
+    <link href="{{ asset('backend/assets2/img/NMPCLogo.png') }}" rel="icon">
+    <link href="{{ asset('backend/assets2/img/NMPCLogo.png') }}" rel="apple-touch-icon">
+	
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 	<!-- include leaflet -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -178,11 +182,16 @@
 	<script>
 		$(document).ready(function() {
 			$('#JobTable').DataTable({
-				"lengthMenu": [5, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
-				"pageLength": 5, // Show 5 rows per page by default
+				order: [
+                    [0, "desc"]
+                ],
+				"lengthMenu": [6, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
+				"pageLength": 6, // Show 5 rows per page by default
 			});
 		});
 	</script>
+
+	
 
 	<!-- <script>
 		$(function() {
@@ -220,9 +229,12 @@
 	<script>
 		$(function() {
 			$('#dataSpot').DataTable({
+				order: [
+                    [0, "desc"]
+                ],
 				processing: true,
-				"lengthMenu": [4, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
-				"pageLength": 4, // Show 5 rows per page by default
+				"lengthMenu": [5, 10, 25, 50], // Display 5, 10, 25, or 50 rows per page
+				"pageLength": 5, // Show 5 rows per page by default
 				serverSide: true,
 				responsive: true,
 				lengthChange: true,
@@ -279,6 +291,36 @@
             }
         })
     })
+</script>
+
+<script>
+    // Function to update time and date
+    function updateTimeAndDate() {
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        const currentDate = new Date();
+        const dayOfWeek = daysOfWeek[currentDate.getDay()];
+        const month = monthsOfYear[currentDate.getMonth()];
+        const day = currentDate.getDate();
+        const year = currentDate.getFullYear();
+        const formattedDate = `${dayOfWeek}, ${month} ${day}, ${year}`;
+
+        const hours = currentDate.getHours() % 12 || 12;
+        const minutes = currentDate.getMinutes();
+        const seconds = currentDate.getSeconds();
+        const ampm = currentDate.getHours() >= 12 ? 'PM' : 'AM';
+        const formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds} ${ampm}`;
+
+        // Display the time and date in the specified container
+        document.getElementById('dateTimeContainer').innerText = `${formattedTime} / ${formattedDate}`;
+
+        // Update every second
+        setTimeout(updateTimeAndDate, 1000);
+    }
+
+    // Call the function to initiate
+    updateTimeAndDate();
 </script>
 
 <!-- <script>

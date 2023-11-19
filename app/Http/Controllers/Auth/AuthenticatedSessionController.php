@@ -46,10 +46,10 @@ class AuthenticatedSessionController extends Controller
         $lastName = $request->user()->lastname;   // Get the user's last name
 
         $enotification = array(
-            
             'message' => 'Logged in Successful', 'Welcome Back ' . $firstName . ' ' . $lastName,
             'alert-type' => 'success'
         );
+
         return redirect()->intended($url)->with($enotification);
     }
 

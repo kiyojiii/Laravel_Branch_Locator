@@ -2,10 +2,6 @@
 @section('admin')
 
 <div class="page-content">
-    <nav class="page-breadcrumb">
-        <a href="{{ route('add.job') }}" class="btn btn-inverse-success"> Add Job </a>
-    </nav>
-
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -18,6 +14,12 @@
                             </ol>
                         </nav> 
                     </h6>
+                    <div class="card">
+                        <div class="card-header">
+                            <strong> List of Branches </strong>
+                            <a href="{{ route('add.job') }}" class="btn btn-info btn-sm float-end"> Add Job </a>
+                        </div>
+                        <div class="card-body">
                     <div class="table-responsive">
                         <table id="JobTable" class="table">
                             <thead>
@@ -56,6 +58,8 @@
                                 @endforeach
                             </tbody>
                         </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
